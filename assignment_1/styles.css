@@ -62,10 +62,12 @@ section{
 
 h1{
     font-size: 32px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 h2{
     font-weight: 525;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 dt{
