@@ -12,9 +12,24 @@ nav{
     padding-left: 40px;
 }
 
+a:hover{
+    opacity: 0.5;
+}
+
+a:visited{
+    color: grey;
+}
+
+a:active{
+    font-weight: bolder;
+}
+
+a:link{
+    color: black;
+}
+
 nav a{
     margin: 10px;
-    color: black;
 }
 
 section{
