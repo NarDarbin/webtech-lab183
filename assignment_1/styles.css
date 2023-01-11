@@ -121,7 +121,11 @@ p{
     font-style: oblique;
 }
 
-@media screen and (max-width: 650px) {
+.printing_title{
+    display: none;
+}
+
+@media screen and (max-width: 650px){
     body{
         font-size: 14px
     }
@@ -154,7 +158,53 @@ p{
     dt{
         font-size: 16px;
     }
- }
+}
+
+@media print{
+    body{
+        font: 16px "Times New Roman", serif;
+    }
+
+    nav{
+        display: none;
+    }
+
+    section .content {
+        width: 80%;
+    }
+
+    .printing_title{
+        display: block;
+    }
+
+    section{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .background_image{
+        height: 0;
+    }
+
+    p{
+        text-indent: 0px;
+    
+        orphans: 3;
+        widows: 3;
+        columns: 2;
+    }
+
+    .by_tags{
+        display: none;
+    }
+
+    .about_us{
+        page-break-after: always;
+    }
+}
 
 @page {
     size: A4;
