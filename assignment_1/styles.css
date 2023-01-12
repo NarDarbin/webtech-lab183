@@ -238,3 +238,15 @@ p{
 @page {
     size: A4;
 }
+table{
+    border-collapse: collapse;
+}
+
+
+table, th, td{
+    border: 1px solid black;
+}
+img{
+    width: 200px;
+    height: 250px;
+}
