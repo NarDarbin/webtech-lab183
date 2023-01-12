@@ -69,8 +69,8 @@
             <div class="content">
                 <h1>Album</h1>
 
-                <caption>Photo Album</caption>
                 <table>
+                    <caption>Photo Album</caption>
                     <tr>
                         <th>image</th>
                         <th>author</th>
@@ -101,11 +101,14 @@
                     </tr>
                     <tr>
                         <form action="https://wt.ops.labs.vu.nl/api23/daef2940" method="post">
-                            <td><input type="text" id="image"  name="image"></td>
-                            <td><input type="text" id="author" name="author"></td>
+                            <td><input type="url" id="image"  name="image" required></td>
+                            <td><input type="text" id="author" name="author" required></td>
                             <td><input type="text" id="alt" name="alt"></td>
                             <td><input type="text" id="tags" name="tags"></td>
-                            <td><input type="text" id="description" name="description"> <input type="submit" value="Submit"></td>
+                            <td>
+                                <input type="text" id="description" name="description"> 
+                                <input type="submit" value="Submit">
+                            </td>
                         </form>
                     </tr>
                 </table>
