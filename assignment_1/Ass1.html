@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="Ass1.css">
+
+        <title>The Photo Album</title>
+    </head>
+    <body>
+
+        <nav>
+            <a href="#about-us">About Us</a>
+            <a href="#images">Images</a>
+            <a href="#contributors">Contributors</a>
+        </nav>
+
+        <section class="background_image"></section>
+        <section id="about-us" class="about_us"></section>
+
+        <h1>About us</h1>
+
+        <p>Text here</p>
+
+        <caption>Photo Album</caption>
+        <table>
+            <tr>
+                <th>image</th>
+                <th>author</th>
+                <th>alt</th>
+                <th>tags</th>
+                <th>description</th>
+            </tr>
+            <tr>
+                <td><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Shakespeare.jpg/1024px-Shakespeare.jpg" alt="William Shakespeare"></td>
+                <td>William Shakespeare</td>
+                <td>The Chandos Portrait of William Shakespeare</td>
+                <td>English playwright, poet and actor</td>
+                <td>This was long thought to be the only portrait of William Shakespeare that had any claim to have been painted from life, until another possible life portrait, the Cobbe portrait, was revealed in 2009. The portrait is known as the 'Chandos portrait' after a previous owner, James Brydges, 1st Duke of Chandos. It was the first portrait to be acquired by the National Portrait Gallery in 1856. The artist may be by a painter called John Taylor who was an important member of the Painter-Stainers' Company.</td>
+            </tr>
+            <tr>
+                <td><img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Agatha_Christie.png"></td>
+                <td>Agatha Christie</td>
+                <td>Christie in 1958</td>
+                <td>English writer</td>
+                <td>Dame Agatha Mary Clarissa Christie was an English writer known for her 66 detective novels and 14 short story collections, particularly those revolving around fictional detectives Hercule Poirot and Miss Marple. She also wrote the world's longest-running play, the murder mystery The Mousetrap, which has been performed in the West End since 1952.</td>
+            </tr>
+            <tr>
+                <td><img src="https://upload.wikimedia.org/wikipedia/en/4/42/Richard_Feynman_Nobel.jpg"></td>
+                <td>Richard Feynman</td>
+                <td>Image of Nobel laureate Richard Feynman</td>
+                <td>physics, nobel_prize, man</td>
+                <td>Nobel laureate Richard Feynman is the author of the famous The Feynman Lectures on Physics, perhaps his most accessible work for anyone with an interest in physics, compiled from lectures to Caltech undergraduates in 1961–64.</td>
+            </tr>
+            <tr>
+                <form action="https://wt.ops.labs.vu.nl/api23/daef2940" method="post">
+                    <td><input type="text" id="image"  name="image"></td>
+                    <td><input type="text" id="author" name="author"></td>
+                    <td><input type="text" id="alt" name="alt"></td>
+                    <td><input type="text" id="tags" name="tags"></td>
+                    <td><input type="text" id="description" name="description"> <input type="submit" value="Submit"></td>
+                </form>
+            </tr>
+                
+        </table>
+
+        <section id="images" class="Images"></section>
+        <h1>Images</h1>
+        <p>Here are some more imgaes of the authors</p>
+
+        <ol>
+            <li>
+                <em>William Shakespeare</em>
+                <ul>
+                    <li><a href="https://www.history.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTU3ODc5MDg3NTExNDQ2ODU3/shakespeare-hero.jpg">picture 1</a></li>
+                    <li><a href="https://images.immediate.co.uk/production/volatile/sites/7/2019/04/114.-GettyImages-600016101-fbb5b6b.jpg">picture 2</a></li>
+                </ul>
+            </li>
+            <li>
+                <em>Agatha Christie</em>
+                <ul>
+                    <li><a href="https://agathachristie.imgix.net/image-store/Agatha-Christie-Autobiography.jpg?auto=compress,format&fit=crop&q=65&w=400&h=267">picture 1</a></li>
+                    <li><a href="https://newlinesmag.com/wp-content/uploads/Agatha-Christie.jpg">picture 2</a></li>
+                    <li><a href="https://flxt.tmsimg.com/assets/323_v9_ba.jpg">picture 3</a></li>
+                </ul>
+            </li>
+            <li>
+                <em>Richard Feynman</em>
+                <ul>
+                    <li><a href="https://caltech-prod.s3.amazonaws.com/main/images/feynman01-NEWS-WEB.width-600_tSwRQP5.jpg">picture 1</a></li>
+                    <li><a href="https://miro.medium.com/max/1400/1*h0m81hmIfZzPLFTG1pPAeg.jpeg">picture 2</a></li>
+                    <li><a href="https://www.themoviedb.org/t/p/w500/hHRIn11A69oDvZtgc3vHXmF5k65.jpg">picture 3</a></li>
+                </ul>
+            </li>
+        </ol>
+
+    </body>
+</html>
