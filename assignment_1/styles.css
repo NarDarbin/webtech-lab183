@@ -75,8 +75,6 @@ section{
 section .content{
     margin: auto;
     width: 60%;
-
-    overflow-x: auto;
 }
 
 section.shaded{
@@ -163,8 +161,11 @@ table{
 }
 
 table img{
-    width: 200px;
-    height: 250px;
+    max-width: 200px;
+    max-height: 250px;
+
+    width: 20vw;
+    height: 25vw;
 
     border-color: red;
     border-width: 1px;
@@ -172,8 +173,22 @@ table img{
     border-radius: 50%;
 }
 
+input{
+    width: 100%;
+}
+
 input:focus {
     background-color: lightblue;
+}
+
+.contributors dl{
+    text-align: right;
+}
+
+.contributors img{
+    width: 50%;
+    max-width: 200px;
+    float: left;
 }
 
 @media screen and (max-width: 650px){
@@ -208,6 +223,16 @@ input:focus {
 
     dt{
         font-size: 16px;
+    }
+
+    table{
+        font-size: 8px;
+    }
+}
+
+@media screen and (max-width: 400px){
+    table{
+        font-size: 8px;
     }
 }
 
@@ -274,6 +299,14 @@ input:focus {
 
     .compatibility_report p{
         columns: 1;
+    }
+
+    table{
+        font-size: 12px;
+    }
+
+    .form{
+        display: none;
     }
 }
 
