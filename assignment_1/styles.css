@@ -125,6 +125,11 @@ p{
     display: none;
 }
 
+.compatibility_report img{
+    width: 100%;
+    height: auto;
+}
+
 @media screen and (max-width: 650px){
     body{
         font-size: 14px

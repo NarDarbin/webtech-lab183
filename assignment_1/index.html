@@ -107,5 +107,73 @@
             </div>
         </section>
 
+        <section class="shaded compatibility_report">
+            <div class="content">
+                <h1>Compatibillity Report</h1>
+
+                <h2>Desktop Mode</h2>
+
+                <p>
+                    Hereby are presented the website page opened in Google Chrome (on the right) and Mozilla Firefox (on the left) browsers. It's important to note 
+                    that the page produces no errors in both of the browers
+                </p>
+
+                <img src="https://drive.google.com/uc?export=view&id=1V-mW0jt_k3Rz7n7Ra--toqQ1ffXFLhtt">
+
+                <h3>Margins</h3>
+
+                <p>
+                    <strong>Differences:</strong> the margins in the Firefox seem to be a bit bigger in the navigation bar reflected by its height. This is the result 
+                    of one page being wider than the other as this does not change when resizing windows to the reasonable extent
+                </p>
+                <p>
+                    <strong>Solution:</strong> adjusting the Chrome margin to be corresponding to Firefox inside of the <code>@media screen and (-webkit-min-device-pixel-ratio:0)</code>
+                    media query
+                </p>
+                
+                <h3>Font Weight</h3>
+
+                <p>
+                    <strong>Differences:</strong> Chrome and Firefox treat font weight differently with Firefox making those bolder than Chrome.
+                </p>
+                <p>
+                    <strong>Solution:</strong> adjust the weight to the desirable on Firefox browser and then using media query <code>@media screen and (-webkit-min-device-pixel-ratio:0)</code> 
+                    adjust the weight on Chrome browser to the desirable to make it bolder.
+                </p>
+
+                <h2>Mobile Version</h2>
+
+                <p>
+                    Mobile versions were tested using a browser emulator. Browser differences were the same as on desktop version; however, the font weight difference in paragraphs
+                    became more apparent on mobile version. The following picture below demostrated how the website compares when viewed on iPhone 12 Pro.
+                </p>
+
+                <img src="https://drive.google.com/uc?export=view&id=1e1VS-wG8e37LFpObtz3ucJXa92cEAQAB">
+
+                <p>
+                    <strong>Differences:</strong> Chrome and Firefox treat font weight differently with Firefox making those bolder than Chrome and font size in Firefox seem bigger.
+                </p>
+                <p>
+                    <strong>Solution:</strong> adjust the weight to the desirable on Firefox browser and then using media query <code>@media screen and (-webkit-min-device-pixel-ratio:0)</code> 
+                    adjust the weight on Chrome browser to the desirable to make it bolder.
+                </p>
+
+                <h2>Print Media Version</h2>
+
+                <p>
+                    Printed versions were tested on differences in the printing emulator as shown below. Almost all the differences versions have are inherit to ones desktop and mobile versions had. 
+                </p>
+
+                <h3>Default Header</h3>
+
+                <p>
+                    <strong>Differences:</strong> Firefox by default shows the title of the website and its address at the top of the page printed while Google leaves the space blank.
+                </p>
+
+                <img src="https://drive.google.com/uc?export=view&id=111df9qN9yKnmCiKkOTNOVUqCASwe3rOI">
+            </div>
+            
+        </section>
+
     </body>
 </html>
