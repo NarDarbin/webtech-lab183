@@ -75,6 +75,8 @@ section{
 section .content{
     margin: auto;
     width: 60%;
+
+    overflow-x: auto;
 }
 
 section.shaded{
@@ -264,6 +266,10 @@ input:focus {
 
     .compatibility_report h2.compatibility_desktop_title{
         page-break-before: avoid;
+    }
+
+    .images{
+        page-break-after: always;
     }
 
     .compatibility_report p{
