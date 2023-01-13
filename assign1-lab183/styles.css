@@ -200,6 +200,16 @@ figcaption{
     text-align: center;
 }
 
+figure{
+    margin: 10px;
+}
+
+@media screen and (max-width: 1100px){
+    table{
+        font-size: 12px;
+    }
+}
+
 @media screen and (max-width: 650px){
     body{
         font-size: 14px
@@ -233,15 +243,31 @@ figcaption{
     dt{
         font-size: 16px;
     }
+}
+
+@media screen and (max-width: 500px){
+    .image_containter{
+        overflow-x: scroll;
+    }
 
     table{
-        font-size: 8px;
+        font-size: 14px;
+        width: 220vw;
+    }
+
+    table img{
+        width: 40vw;
+        height: 50vw;
+    }
+
+    nav ul li{
+        display: block;
     }
 }
 
-@media screen and (max-width: 400px){
-    table{
-        font-size: 8px;
+@media screen and (max-width: 260px){
+    nav ul{
+        padding-left: 20px;
     }
 }
 
