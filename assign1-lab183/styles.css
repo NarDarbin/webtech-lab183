@@ -118,6 +118,7 @@ p{
     text-indent: 25px;
     text-align: justify;
 
+    font-size: 16px;
     font-style: oblique;
 }
 
@@ -320,4 +321,14 @@ figcaption{
 
 @page {
     size: A4;
+}
+
+@supports (-moz-transform: translate(0, 0)){
+    h2{
+        font-weight: 430;
+    }
+
+    nav{
+        padding: 22px;
+    }
 }
