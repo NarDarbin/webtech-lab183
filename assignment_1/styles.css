@@ -154,8 +154,8 @@ th, td{
 table{
     width: 100%;
     border-collapse: separate;
-    border-spacing: 0px 50px;
-    margin-top: -50px;
+    border-spacing: 0px 30px;
+    margin-top: -30px;
 
     caption-side: bottom;
 }
@@ -189,6 +189,14 @@ input:focus {
     width: 50%;
     max-width: 200px;
     float: left;
+}
+
+.image{
+    text-align: center;
+}
+
+figcaption{
+    text-align: center;
 }
 
 @media screen and (max-width: 650px){
