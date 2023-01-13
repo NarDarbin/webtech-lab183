@@ -14,11 +14,11 @@ nav{
     padding-left: 40px;
 }
 
-ol.tags{
+.tags{
     list-style-type: upper-latin;
 }
 
-ol.tags li ul{
+.tags li ul{
     list-style-image: url("https://developer.mozilla.org/static/media/note-info.0eafb6e7738509bce66e.svg");
 }
 
@@ -72,12 +72,12 @@ section{
     margin-bottom: 20px;
 }
 
-section .content{
+.content{
     margin: auto;
     width: 60%;
 }
 
-section.shaded{
+.shaded{
     background: #f5f5f0;
 }
 
@@ -276,10 +276,15 @@ figcaption{
 
     p{
         text-indent: 0px;
-    
-        orphans: 3;
-        widows: 3;
         columns: 2;
+    }
+
+    .our_team{
+        orphans: 6;
+    }
+
+    .our_mission{
+        widows: 7;
     }
 
     .more_images{
