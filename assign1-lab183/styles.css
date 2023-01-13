@@ -14,20 +14,25 @@ nav{
     padding-left: 40px;
 }
 
-.tags{
-    list-style-type: upper-latin;
-}
-
-.tags li ul{
-    list-style-image: url("https://developer.mozilla.org/static/media/note-info.0eafb6e7738509bce66e.svg");
-}
-
 nav ul{
     list-style: none;
 }
 
 nav ul li{
     display: inline-block;
+}
+
+nav a{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.tags{
+    list-style-type: upper-latin;
+}
+
+.tags li ul{
+    list-style-image: url("https://developer.mozilla.org/static/media/note-info.0eafb6e7738509bce66e.svg");
 }
 
 ol{
@@ -56,11 +61,6 @@ a:active{
 
 a:link{
     color: black;
-}
-
-nav a{
-    margin-left: 10px;
-    margin-right: 10px;
 }
 
 section{
@@ -93,6 +93,15 @@ section{
     height: 32vw;
 }
 
+p{
+    text-indent: 25px;
+    text-align: justify;
+
+    font-size: 16px;
+    font-style: oblique;
+}
+
+
 h1{
     font-size: 32px;
     font-family: Arial, Helvetica, sans-serif;
@@ -114,14 +123,6 @@ dt{
     font-size: 20px;
 }
 
-p{
-    text-indent: 25px;
-    text-align: justify;
-
-    font-size: 16px;
-    font-style: oblique;
-}
-
 .printing_title{
     display: none;
 }
@@ -137,19 +138,6 @@ p{
 
 .compatibility_report p{
     text-indent: 0px;
-}
-
-table td{
-    vertical-align: top;
-}
-
-
-table th{
-    text-transform: capitalize;
-}
-
-th, td{
-    border: 1px solid black;
 }
 
 table{
@@ -172,6 +160,19 @@ table img{
     border-width: 1px;
     border-style: solid;
     border-radius: 50%;
+}
+
+table td{
+    vertical-align: top;
+}
+
+
+table th{
+    text-transform: capitalize;
+}
+
+th, td{
+    border: 1px solid black;
 }
 
 input{
@@ -219,6 +220,10 @@ figure{
         width: 80%;
     }
 
+    .background_image{
+        height: 60vw;
+    }
+
     p{
         text-indent: 0px;
         font-size: 14px;
@@ -232,10 +237,6 @@ figure{
         font-size: 22px;
     }
 
-    .background_image{
-        height: 60vw;
-    }
-
     ol{
         list-style-position: outside;
     }
@@ -246,6 +247,10 @@ figure{
 }
 
 @media screen and (max-width: 500px){
+    nav ul li{
+        display: block;
+    }
+    
     .image_containter{
         overflow-x: scroll;
     }
@@ -258,10 +263,6 @@ figure{
     table img{
         width: 40vw;
         height: 50vw;
-    }
-
-    nav ul li{
-        display: block;
     }
 }
 
@@ -280,14 +281,6 @@ figure{
         display: none;
     }
 
-    section .content {
-        width: 80%;
-    }
-
-    .printing_title{
-        display: block;
-    }
-
     section{
         padding-top: 10px;
         padding-bottom: 10px;
@@ -296,8 +289,24 @@ figure{
         margin-bottom: 10px;
     }
 
+    section .content {
+        width: 80%;
+    }
+
+    .printing_title{
+        display: block;
+    }
+
     .background_image{
         height: 0;
+    }
+
+    table{
+        font-size: 12px;
+    }
+
+    .form{
+        display: none;
     }
 
     p{
@@ -333,20 +342,12 @@ figure{
         page-break-before: avoid;
     }
 
-    .images{
+    .album_images{
         page-break-after: always;
     }
 
     .compatibility_report p{
         columns: 1;
-    }
-
-    table{
-        font-size: 12px;
-    }
-
-    .form{
-        display: none;
     }
 }
 
