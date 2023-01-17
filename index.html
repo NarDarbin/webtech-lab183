@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="styles.css">
         <link rel="icon" type="image/jpg" href="https://icon-library.com/images/books-icon/books-icon-9.jpg"/>
 
+        <script src="gallery.js"></script>
+
         <title>Authors Photoalbum</title>
     </head>
 
@@ -77,7 +79,7 @@
                 <h1>Album</h1>
 
                 <div class="image_containter">
-                    <form action="https://wt.ops.labs.vu.nl/api23/daef2940" method="post">
+                    <form method="post">
                         <table>
                             <caption>Photo Album</caption>
                             <tr>
@@ -136,13 +138,13 @@ Feynman
                                 <td>Nobel laureate Richard Feynman is the author of the famous The Feynman Lectures on Physics, perhaps his most accessible work for anyone with an interest in physics, compiled from lectures to Caltech undergraduates in 1961–64.</td>
                             </tr>
                             <tr class="form">
-                                <td><input type="url" id="image"  name="image" required></td>
+                                <td><input type="url" id="url"  name="image" required></td>
                                 <td><input type="text" id="author" name="author" required></td>
                                 <td><input type="text" id="alt" name="alt"></td>
                                 <td><input type="text" id="tags" name="tags"></td>
                                 <td>
                                     <input type="text" id="description" name="description"> 
-                                    <input type="submit" value="Submit">
+                                    <input type="button" id="submit" value="Submit">
                                 </td>
                             </tr>
                         </table>
