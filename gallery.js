@@ -1,11 +1,10 @@
 const API = "https://wt.ops.labs.vu.nl/api23/daef2940";
 
 function get(){
-
+    return fetch(API);
 }
 
 function post(data){
-    console.log(data);
     fetch(API, {
         method: 'post',
         body: new URLSearchParams(data),
@@ -36,12 +35,18 @@ function getFormData(){
     return data;
 }
 
+function buildAlbum(data){
+    console.log(data)
+}
+
 function main(){
-    document.querySelector('#submit').addEventListener('click', function () {
-        const data = getFormData();
-    
-        post(data);
+    document.querySelector('#submit').addEventListener('click', function () {    
+        post(getFormData());
     }); 
+
+    get()
+    .then(resposne => resposne.json())
+    .then((data) => buildAlbum(data));;
 }
 
 window.addEventListener('load', function () {
