@@ -17,6 +17,22 @@ function update(){
 
 function reset(){
     fetch(`${API}/reset`);
+    resetTable(table);
+}
+
+function resetTable(){
+    const table = document.querySelector('#content_table');
+
+    table.innerHTML = `
+        <caption>Photo Album</caption>
+        <tr>
+            <th>image</th>
+            <th>author</th>
+            <th>alt</th>
+            <th>tags</th>
+            <th>description</th>
+        </tr>
+    `;
 }
 
 function addRow(table, image, authour, alt, tags, description){
@@ -50,26 +66,31 @@ function getFormData(){
     return data;
 }
 
-function buildAlbum(data){
-    const table = document.querySelector('#content_table');
+function buildAlbum(){
+    get()
+    .then(resposne => resposne.json())
+    .then((data) => {
+        const table = document.querySelector('#content_table');
 
-    for(const entity of data){
-        addRow(table, entity.image, entity.author, entity.alt, entity.tags, entity.description);
-    }
+        for(const entity of data){
+            addRow(table, entity.image, entity.author, entity.alt, entity.tags, entity.description);
+        }
+    });
 }
 
 function main(){
+    buildAlbum();
+
     document.querySelector('#submit').addEventListener('click', function () {    
         post(getFormData());
+        resetTable();
+        buildAlbum();
     });
 
     document.querySelector('#reset').addEventListener('click', function () {    
         reset();
-    }); 
-
-    get()
-    .then(resposne => resposne.json())
-    .then((data) => buildAlbum(data));
+        buildAlbum();
+    });
 
     MicroModal.init({
         openTrigger: 'data-custom-open',
