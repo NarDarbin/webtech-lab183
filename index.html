@@ -24,14 +24,14 @@
                     </header>
 
                     <main id="modal-1-content" class="modal__content">
-                        <form>
+                        <form id="add_form">
                             <input type="url" id="url"  name="image" required>
                             <input type="text" id="author" name="author" required>
                             <input type="text" id="alt" name="alt" required>
                             <input type="text" id="tags" name="tags" required>
 
                             <input type="text" id="description" name="description" required> 
-                            <input type="button" id="submit" value="Submit">
+                            <input type="button" id="add" value="Submit">
                         </form>
                     </main>
 
@@ -121,10 +121,28 @@
 
                     <div class="modify_content">
                         <div class="button-group add_image">
+                            <h2>Add My Image</h2>
                             <a data-custom-open="modal-1" href="#" class="w-button">Add My Image</a><br>
                         </div>
-                        <div class="update_image">
+
+                        <div class="reset_image">
+                            <h2>Reset Images</h2>
                             <button id="reset">Reset Images</button>
+                        </div>
+
+                        <div class="update_image">
+                            <h2>Update Image</h2>
+                            <form id="update_form">
+                                <select id="image_id" name="id"></select>
+
+                                <input type="url" name="image" required>
+                                <input type="text" name="author" required>
+                                <input type="text" name="alt" required>
+                                <input type="text" name="tags" required>
+
+                                <input type="text" id="description" name="description" required> 
+                                <input type="button" id="update" value="Submit">
+                            </form>
                         </div>
                     </div>
                 </div>
