@@ -11,16 +11,31 @@ function post(data){
     });
 }
 
-function reset(){
-
-}
-
 function update(){
 
 }
 
-function addRow(){
+function reset(){
+    fetch(`${API}/reset`);
+}
 
+function addRow(table, image, authour, alt, tags, description){
+    table.innerHTML += `
+        <tr>
+            <td class="image">
+                <figure>
+                    <img src="${image}" alt="${alt}">
+                    <figcaption>${alt}</figcaption>
+                </figure>
+            </td>
+            <td>
+                <pre>${authour}</pre>                   
+            </td>
+            <td>${alt}</td>
+            <td>${tags}</td>
+            <td>${description}</td>
+        </tr>
+    `
 }
 
 function getFormData(){
@@ -36,17 +51,35 @@ function getFormData(){
 }
 
 function buildAlbum(data){
-    console.log(data)
+    const table = document.querySelector('#content_table');
+
+    for(const entity of data){
+        addRow(table, entity.image, entity.author, entity.alt, entity.tags, entity.description);
+    }
 }
 
 function main(){
     document.querySelector('#submit').addEventListener('click', function () {    
         post(getFormData());
+    });
+
+    document.querySelector('#reset').addEventListener('click', function () {    
+        reset();
     }); 
 
     get()
     .then(resposne => resposne.json())
-    .then((data) => buildAlbum(data));;
+    .then((data) => buildAlbum(data));
+
+    MicroModal.init({
+        openTrigger: 'data-custom-open',
+        closeTrigger: 'data-custom-close',
+        openClass: 'is-open',
+        disableScroll: false,
+        disableFocus: false,
+        debugMode: false
+    });
+    
 }
 
 window.addEventListener('load', function () {

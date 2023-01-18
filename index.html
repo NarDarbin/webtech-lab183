@@ -8,13 +8,42 @@
         <link rel="stylesheet" href="styles.css">
         <link rel="icon" type="image/jpg" href="https://icon-library.com/images/books-icon/books-icon-9.jpg"/>
 
+        <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
         <script src="gallery.js"></script>
 
         <title>Authors Photoalbum</title>
     </head>
 
     <body>
-        
+        <div id="modal-1" class="modal micromodal-slide" aria-hidden="false">
+            <div data-custom-close="1" tabindex="-1" class="modal__overlay">
+                <div aria-labelledby="modal-1-title" role="dialog" aria-modal="true" class="modal__container">
+
+                    <header class="modal__header">
+                        <h2 id="modal-1-title" class="modal__title">Add My Own Image</h2>
+                    </header>
+
+                    <main id="modal-1-content" class="modal__content">
+                        <form>
+                            <input type="url" id="url"  name="image" required>
+                            <input type="text" id="author" name="author" required>
+                            <input type="text" id="alt" name="alt" required>
+                            <input type="text" id="tags" name="tags" required>
+
+                            <input type="text" id="description" name="description" required> 
+                            <input type="button" id="submit" value="Submit">
+                        </form>
+                    </main>
+
+                    <div class="modal__footer">
+                        <a arial-label="Close this dialog window" data-custom-close="1" href="#" class="modal__close-btn w-inline-block">
+                            <div>Close this modal</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <nav>
             <ul>
                 <li><a href="#about_us">About Us</a></li>
@@ -79,76 +108,25 @@
                 <h1>Album</h1>
 
                 <div class="image_containter">
-                    <form method="post">
-                        <table>
-                            <caption>Photo Album</caption>
-                            <tr>
-                                <th>image</th>
-                                <th>author</th>
-                                <th>alt</th>
-                                <th>tags</th>
-                                <th>description</th>
-                            </tr>
-                            <tr>
-                                <td class="image" id="William_Shakespeare">
-                                    <figure>
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Shakespeare.jpg/1024px-Shakespeare.jpg" alt="William Shakespeare">
-                                        <figcaption>William Shakespeare</figcaption>
-                                    </figure>
-                                </td>
-                                <td>
-                                    <pre>William 
-Shakespeare
-                                    </pre>                   
-                                </td>
-                                <td>The Chandos Portrait of William Shakespeare</td>
-                                <td>English playwright, poet and actor</td>
-                                <td>This was long thought to be the only portrait of William Shakespeare that had any claim to have been painted from life, until another possible life portrait, the Cobbe portrait, was revealed in 2009. The portrait is known as the 'Chandos portrait' after a previous owner, James Brydges, 1st Duke of Chandos. It was the first portrait to be acquired by the National Portrait Gallery in 1856. The artist may be by a painter called John Taylor who was an important member of the Painter-Stainers' Company.</td>
-                            </tr>
-                            <tr>
-                                <td class="image" id="Agatha_Christie">
-                                    <figure>
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Agatha_Christie.png" alt="Agatha Christie">
-                                        <figcaption>Agatha Christie</figcaption>
-                                    </figure>
-                                </td>
-                                <td>
-                                    <pre>Agatha 
-Christie
-                                    </pre>                      
-                                </td>
-                                <td>Christie in 1958</td>
-                                <td>English writer</td>
-                                <td>Dame Agatha Mary Clarissa Christie was an English writer known for her 66 detective novels and 14 short story collections, particularly those revolving around fictional detectives Hercule Poirot and Miss Marple. She also wrote the world's longest-running play, the murder mystery The Mousetrap, which has been performed in the West End since 1952.</td>
-                            </tr>
-                            <tr>
-                                <td class="image" id="Richard_Feynman">
-                                    <figure>
-                                        <img src="https://upload.wikimedia.org/wikipedia/en/4/42/Richard_Feynman_Nobel.jpg" alt="Richard Feynman">
-                                        <figcaption>Richard Feynman</figcaption>
-                                    </figure>
-                                </td>
-                                <td>
-                                    <pre>Richard 
-Feynman
-                                    </pre>                       
-                                </td>
-                                <td>Image of Nobel laureate Richard Feynman</td>
-                                <td>physics, nobel_prize, man</td>
-                                <td>Nobel laureate Richard Feynman is the author of the famous The Feynman Lectures on Physics, perhaps his most accessible work for anyone with an interest in physics, compiled from lectures to Caltech undergraduates in 1961–64.</td>
-                            </tr>
-                            <tr class="form">
-                                <td><input type="url" id="url"  name="image" required></td>
-                                <td><input type="text" id="author" name="author" required></td>
-                                <td><input type="text" id="alt" name="alt"></td>
-                                <td><input type="text" id="tags" name="tags"></td>
-                                <td>
-                                    <input type="text" id="description" name="description"> 
-                                    <input type="button" id="submit" value="Submit">
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
+                    <table id="content_table">
+                        <caption>Photo Album</caption>
+                        <tr>
+                            <th>image</th>
+                            <th>author</th>
+                            <th>alt</th>
+                            <th>tags</th>
+                            <th>description</th>
+                        </tr>
+                    </table>
+
+                    <div class="modify_content">
+                        <div class="button-group add_image">
+                            <a data-custom-open="modal-1" href="#" class="w-button">Add My Image</a><br>
+                        </div>
+                        <div class="update_image">
+                            <button id="reset">Reset Images</button>
+                        </div>
+                    </div>
                 </div>
 
             </div>

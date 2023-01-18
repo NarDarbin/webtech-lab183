@@ -204,6 +204,38 @@ figure{
     margin: 10px;
 }
 
+.modal.micromodal-slide {
+    display: none;
+
+    background-color: lightblue;
+    width: 50%;
+    height: 300px;
+    padding: 20px;
+    
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.modal.micromodal-slide form{
+    width: 80%;
+    margin: auto;
+}
+
+.modal.micromodal-slide form input{
+    width: 80%;
+
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.modal.is-open {
+    display: block;
+}
+
+
 @media screen and (max-width: 1100px){
     table, pre{
         font-size: 12px;
