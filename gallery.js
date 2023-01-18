@@ -17,7 +17,30 @@ function update(){
 
 function reset(){
     fetch(`${API}/reset`);
-    resetTable(table);
+    resetTable();
+}
+
+function filterTable(author){
+    resetTable();
+
+    const table = document.querySelector('#content_table');
+    
+    if(table.classList.contains('filtered')){
+
+        table.classList.remove('filtered');
+        buildAlbum();
+
+    } else{
+        table.setAttribute('class', 'filtered');
+
+        buildAlbum((data) => { return data.author === author });
+    }
+}
+
+function addFilterListener(element){
+    element.addEventListener('click', function () {
+        filterTable(element.innerHTML);
+    });
 }
 
 function resetTable(){
@@ -45,7 +68,7 @@ function addRow(table, image, authour, alt, tags, description){
                 </figure>
             </td>
             <td>
-                <pre>${authour}</pre>                   
+                <pre class="author">${authour}</pre>                   
             </td>
             <td>${alt}</td>
             <td>${tags}</td>
@@ -66,14 +89,24 @@ function getFormData(){
     return data;
 }
 
-function buildAlbum(){
+function buildAlbum(filter){
     get()
     .then(resposne => resposne.json())
     .then((data) => {
+
+        if(filter){
+            data = data.filter((data) => filter(data));
+        }
+
         const table = document.querySelector('#content_table');
 
         for(const entity of data){
             addRow(table, entity.image, entity.author, entity.alt, entity.tags, entity.description);
+        }
+
+        const authors = document.querySelectorAll('.author');
+        for(const author of authors){
+            addFilterListener(author);
         }
     });
 }
