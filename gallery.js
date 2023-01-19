@@ -12,7 +12,6 @@ function post(data){
 }
 
 function update(data){
-    console.log(data);
     fetch(`${API}/item/${data.id}`, {
         method: 'put',
         body: new URLSearchParams(data),

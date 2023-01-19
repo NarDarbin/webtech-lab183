@@ -1,3 +1,8 @@
+html{
+    padding-top: 100px;
+    scroll-padding-top: 100px;
+}
+
 body, pre{
     margin: 0;
     padding: 0;
@@ -6,15 +11,20 @@ body, pre{
 }
 
 nav{
+    width: 100%;
     background-color: #D9D9D9;
     text-align: right;
 
     padding: 25px;
     padding-right: 40px;
     padding-left: 40px;
+
+    position: fixed;
+    top: 0;
 }
 
 nav ul{
+    margin-right: 80px;
     list-style: none;
 }
 
@@ -61,6 +71,10 @@ a:active{
 
 a:link{
     color: black;
+}
+
+a:target{
+    scroll-margin-top: 100px;
 }
 
 section{
