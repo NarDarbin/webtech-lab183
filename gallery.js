@@ -1,5 +1,8 @@
 const API = "https://wt.ops.labs.vu.nl/api23/daef2940";
 
+let searchFilter;
+let authorFilter;
+
 function get(){
     return fetch(API);
 }
@@ -23,7 +26,7 @@ function reset(){
     resetTable();
 }
 
-function filterTable(author){
+function filterAuthor(author){
     resetTable();
 
     const table = document.querySelector('#content_table');
@@ -31,18 +34,39 @@ function filterTable(author){
     if(table.classList.contains('filtered')){
 
         table.classList.remove('filtered');
-        buildAlbum();
 
+        authorFilter = null;
     } else{
         table.setAttribute('class', 'filtered');
 
-        buildAlbum((data) => { return data.author === author });
+        authorFilter = (data) => { return data.author === author };
     }
+
+    buildFilteredTable();
+}
+
+function filterSearch(searchQuery){
+    searchFilter = (data) => { return data.author.includes(searchQuery) || data.tags.includes(searchQuery) };
+    buildFilteredTable();
+}
+
+function buildFilteredTable(){
+    let filters = [];
+
+    if(searchFilter){
+        filters.push(searchFilter)
+    } 
+    
+    if (authorFilter){
+        filters.push(authorFilter);
+    }
+
+    buildAlbum(filters);
 }
 
 function addFilterListener(element){
     element.addEventListener('click', function () {
-        filterTable(element.innerHTML);
+        filterAuthor(element.innerHTML);
     });
 }
 
@@ -100,14 +124,16 @@ function getFormData(form){
     return data;
 }
 
-function buildAlbum(filter){
+function buildAlbum(filters=[]){
     get()
     .then(resposne => resposne.json())
     .then((data) => {
-
-        if(filter){
+        console.log('data before', data);
+        for(const filter of filters){
             data = data.filter((data) => filter(data));
         }
+
+        console.log('data after', data);
 
         const table = document.querySelector('#content_table');
         const updateSelector = document.querySelector('#image_id');
@@ -152,6 +178,11 @@ function main(){
     document.querySelector('#reset').addEventListener('click', function () {    
         reset();
         buildAlbum();
+    });
+
+    document.querySelector('#search input').addEventListener('input', function(e){
+        resetTable();
+        filterSearch(e.target.value)
     });
 
     MicroModal.init({
