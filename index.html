@@ -4,26 +4,30 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         
         <link rel="stylesheet" href="styles.css">
         <link rel="icon" type="image/jpg" href="https://icon-library.com/images/books-icon/books-icon-9.jpg"/>
 
-        <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
         <script src="gallery.js"></script>
 
         <title>Authors Photoalbum</title>
     </head>
 
     <body>
-        <div id="modal-1" class="modal micromodal-slide" aria-hidden="false">
-            <div data-custom-close="1" tabindex="-1" class="modal__overlay">
-                <div aria-labelledby="modal-1-title" role="dialog" aria-modal="true" class="modal__container">
 
-                    <header class="modal__header">
-                        <h2 id="modal-1-title" class="modal__title">Add My Own Image</h2>
-                    </header>
-
-                    <main id="modal-1-content" class="modal__content">
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+            
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
                         <form id="add_form">
                             <input type="url" id="url"  name="image" required>
                             <input type="text" id="author" name="author" required>
@@ -33,14 +37,12 @@
                             <input type="text" id="description" name="description" required> 
                             <input type="button" id="add" value="Submit">
                         </form>
-                    </main>
-
-                    <div class="modal__footer">
-                        <a arial-label="Close this dialog window" data-custom-close="1" href="#" class="modal__close-btn w-inline-block">
-                            <div>Close this modal</div>
-                        </a>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
+            
             </div>
         </div>
 
@@ -125,7 +127,7 @@
                     <div class="modify_content">
                         <div class="button-group add_image">
                             <h2>Add My Image</h2>
-                            <a data-custom-open="modal-1" href="#" class="w-button">Add My Image</a><br>
+                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add My Image</button>
                         </div>
 
                         <div class="reset_image">

@@ -27,7 +27,6 @@ function reset(){
 }
 
 function filterAuthor(author){
-    resetTable();
 
     const table = document.querySelector('#content_table');
     
@@ -85,6 +84,10 @@ function resetTable(){
     `;
 }
 
+function resetSelect(updateSelector){
+    updateSelector.innerHTML = '';
+}
+
 function addRow(table, id, image, author, alt, tags, description){
     table.innerHTML += `
         <tr>
@@ -125,18 +128,21 @@ function getFormData(form){
 }
 
 function buildAlbum(filters=[]){
+    console.log("rebuilding the album");
     get()
     .then(resposne => resposne.json())
     .then((data) => {
-        console.log('data before', data);
         for(const filter of filters){
             data = data.filter((data) => filter(data));
         }
 
-        console.log('data after', data);
+        console.log("data recieved", data);
 
         const table = document.querySelector('#content_table');
         const updateSelector = document.querySelector('#image_id');
+
+        resetTable();
+        resetSelect(updateSelector);
 
         for(const entity of data){
             addRow(table, entity.id, entity.image, entity.author, entity.alt, entity.tags, entity.description);
@@ -162,7 +168,6 @@ function main(){
         const form = document.querySelector('#add_form');
 
         post(getFormData(form));
-        resetTable();
         buildAlbum();
     });
 
@@ -170,30 +175,19 @@ function main(){
         const form = document.querySelector('#update_form');
 
         update(getFormData(form));
-
-        resetTable();
-        buildAlbum();
+        
+        setTimeout(buildAlbum, 2000);
     });
 
     document.querySelector('#reset').addEventListener('click', function () {    
         reset();
-        buildAlbum();
+        
+        setTimeout(buildAlbum, 2000);
     });
 
     document.querySelector('#search input').addEventListener('input', function(e){
-        resetTable();
-        filterSearch(e.target.value)
+        filterSearch(e.target.value);
     });
-
-    MicroModal.init({
-        openTrigger: 'data-custom-open',
-        closeTrigger: 'data-custom-close',
-        openClass: 'is-open',
-        disableScroll: false,
-        disableFocus: false,
-        debugMode: false
-    });
-    
 }
 
 window.addEventListener('load', function () {
