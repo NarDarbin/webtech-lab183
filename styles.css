@@ -296,6 +296,19 @@ figure{
 }
 
 @media screen and (max-width: 500px){
+    html{
+        padding-top: 150px;
+        scroll-padding-top: 150px;
+    }
+
+    nav{
+        height: 150px;
+    }
+    
+    nav ul{
+        margin-right: 30px;
+    }
+
     nav ul li{
         display: block;
     }
