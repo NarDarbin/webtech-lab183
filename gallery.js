@@ -46,18 +46,18 @@ function filterAuthor(author){
 
         table.classList.remove('filtered');
 
-        delete filters['author'];
+        delete filters.author;
     } else{
         table.setAttribute('class', 'filtered');
 
-        filters['author'] = (data) => { return data.author === author };
+        filters.author = (data) => { return data.author === author };
     }
 
     buildAlbum(filters);
 }
 
 function filterSearch(searchQuery){
-    filters['search'] = (data) => { return data.author.includes(searchQuery) || data.tags.includes(searchQuery) };
+    filters.search = (data) => { return data.author.includes(searchQuery) || data.tags.includes(searchQuery) };
     buildAlbum(filters)
 }
 
