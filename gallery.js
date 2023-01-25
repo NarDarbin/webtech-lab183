@@ -174,12 +174,14 @@ function main(){
 
         update(getFormData(form));
         
+        // Without set timeout doesn't work
         setTimeout(buildAlbum, 2000);
     });
 
     document.querySelector('#reset').addEventListener('click', function () {    
         reset();
         
+        // Without set timeout doesn't work
         setTimeout(buildAlbum, 2000);
     });
 
