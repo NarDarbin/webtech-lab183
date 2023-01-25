@@ -1,7 +1,19 @@
 const API = "https://wt.ops.labs.vu.nl/api23/daef2940";
 
-let searchFilter;
-let authorFilter;
+const TABLE_DEFAULT_CONTENT = `
+    <caption>Photo Album</caption>
+    <tr>
+        <th>image</th>
+        <th>author</th>
+        <th>alt</th>
+        <th>tags</th>
+        <th>description</th>
+    </tr>
+`;
+
+const SELECT_DEFAULT_CONTENT = ``;
+
+let filters = {};
 
 function get(){
     return fetch(API);
@@ -34,33 +46,19 @@ function filterAuthor(author){
 
         table.classList.remove('filtered');
 
-        authorFilter = null;
+        delete filters['author'];
     } else{
         table.setAttribute('class', 'filtered');
 
-        authorFilter = (data) => { return data.author === author };
-    }
-
-    buildFilteredTable();
-}
-
-function filterSearch(searchQuery){
-    searchFilter = (data) => { return data.author.includes(searchQuery) || data.tags.includes(searchQuery) };
-    buildFilteredTable();
-}
-
-function buildFilteredTable(){
-    let filters = [];
-
-    if(searchFilter){
-        filters.push(searchFilter)
-    } 
-    
-    if (authorFilter){
-        filters.push(authorFilter);
+        filters['author'] = (data) => { return data.author === author };
     }
 
     buildAlbum(filters);
+}
+
+function filterSearch(searchQuery){
+    filters['search'] = (data) => { return data.author.includes(searchQuery) || data.tags.includes(searchQuery) };
+    buildAlbum(filters)
 }
 
 function addFilterListener(element){
@@ -72,23 +70,14 @@ function addFilterListener(element){
 function resetTable(){
     const table = document.querySelector('#content_table');
 
-    table.innerHTML = `
-        <caption>Photo Album</caption>
-        <tr>
-            <th>image</th>
-            <th>author</th>
-            <th>alt</th>
-            <th>tags</th>
-            <th>description</th>
-        </tr>
-    `;
+    table.innerHTML = TABLE_DEFAULT_CONTENT;
 }
 
 function resetSelect(updateSelector){
-    updateSelector.innerHTML = '';
+    updateSelector.innerHTML = SELECT_DEFAULT_CONTENT;
 }
 
-function addRow(table, id, image, author, alt, tags, description){
+function addRow(table, image, author, alt, tags, description){
     table.innerHTML += `
         <tr>
             <td class="image">
@@ -127,16 +116,13 @@ function getFormData(form){
     return data;
 }
 
-function buildAlbum(filters=[]){
-    console.log("rebuilding the album");
+function buildAlbum(filters={}){
     get()
     .then(resposne => resposne.json())
     .then((data) => {
-        for(const filter of filters){
+        for(const [key, filter] of Object.entries(filters)){
             data = data.filter((data) => filter(data));
         }
-
-        console.log("data recieved", data);
 
         const table = document.querySelector('#content_table');
         const updateSelector = document.querySelector('#image_id');
@@ -145,7 +131,7 @@ function buildAlbum(filters=[]){
         resetSelect(updateSelector);
 
         for(const entity of data){
-            addRow(table, entity.id, entity.image, entity.author, entity.alt, entity.tags, entity.description);
+            addRow(table, entity.image, entity.author, entity.alt, entity.tags, entity.description);
             addOption(updateSelector, entity.id, entity.author);
         }
 
@@ -158,7 +144,19 @@ function buildAlbum(filters=[]){
         for(const updateButton of updateButtons){
             addUpdateListener(updateButton);
         }
+
+        if(table.classList.contains('filtered')){
+            colorAuthor();
+        }
     });
+}
+
+function colorAuthor(){
+    const authors = document.querySelectorAll('.author');
+
+    for(const author of authors){
+        author.setAttribute('class', 'filtered_author');
+    }
 }
 
 function main(){
