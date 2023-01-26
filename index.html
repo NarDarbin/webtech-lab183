@@ -46,13 +46,50 @@
             </div>
         </div>
 
+        <div class="modal fade" id="myModal2" role="dialog">
+            <div class="modal-dialog">
+            
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Login</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="add_form">
+                            <label for="eml"><b>Email</b></label>
+                            <input type="email" id="email"  name="email" placeholder="Enter Email" required>
+                            <label for="psw"><b>Password</b></label>
+                            <input type="password" id="password" name="password" placeholder="Enter Password" required>
+                            
+                            <input type="button" value="login">
+                            
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <span class="psw">Forgot <a href="#">password?</a></span>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
         <nav>
             <ul>
                 <li><a href="#about_us">About Us</a></li>
                 <li><a href="#album_images">Images</a></li>
                 <li><a href="#more_images">More Images By Author</a></li>
                 <li><a href="#contributors">Contributors</a></li>
+                <li>           
+                    <div class="login_button">
+                        <div class="button-group login">
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal2">login</button>
+                        </div>
+                    </div>
+                </li>
             </ul>
+
+
         </nav>
 
         <div class="background_image"></div>
@@ -288,5 +325,38 @@
             
         </section>
 
+
+
+        <footer id="sticky-footer">
+            <div class="container text-center">
+              <small> &copy; Copyright: Photoalbum</small>
+            </div>
+          </footer>
+        
     </body>
 </html>
+
+
+<!--
+    We used the nav tag so our users could be able to navigate through the website
+    and find the part that they are interested in. The users can also easily 
+    determine in which part of the website they are because of the headings.
+
+    Our webpage follows the requirement.
+    “All functionality of the content is operable through a keyboard interface
+    without requiring specific timings for individual keystrokes, except where the underlying
+    function requires input that depends on the path of the user's movement and not just the endpoints”. 
+    People can navigate through our webpage by only using a keyboard.
+
+    The webpage follows the requirement. 
+    “Color is not used as the only visual means of 
+    conveying information, indicating an action, prompting a response, or distinguishing a visual element”.
+    Colors are not used in such a way.
+
+    The webpage follows the accessibility requirement. 
+    “Information, structure, and relationships conveyed through presentation c
+    an be programmatically determined or are available in text”. 
+    Information presented through the table and section are all programmatically 
+    determined and can be changed if necessary.
+
+-->
