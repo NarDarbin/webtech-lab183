@@ -105,3 +105,4 @@ dist
 
 # Node modules
 back-end/node_modules
+back-end/.gitignore
