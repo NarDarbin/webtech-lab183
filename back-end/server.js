@@ -55,11 +55,29 @@ router.get('/', async (req, res) => {
 });
 
 router.put('/', async (req, res) => {
-    
+    const { id, image, author, tags, description, alt } = req.body;
+
+    const db = new sqlite3.Database(':memory');
+    const statement = `UPDATE images SET image=?, author=?, tags=?, description=?, alt=? WHERE id=?`;
+
+    db.run(statement, [image, author, tags, description, alt, id]);
+
+    db.close();
+
+    res.status(201).send();
 });
 
 router.delete('/', async (req, res) => {
-    
+    const { id } = req.body;
+
+    const db = new sqlite3.Database(':memory');
+    const statement = `DELETE FROM images WHERE id=?`;
+
+    db.run(statement, [id]);
+
+    db.close();
+
+    res.status(201).send();
 });
 
 setupDatabase();
