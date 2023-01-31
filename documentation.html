@@ -1,0 +1,245 @@
+<h1>Documentation For The Back-End</h1>
+<h2>Introduction</h2>
+<p>The requests defined in the documentation are destined for the HOST:PORT where HOST is the server address and PORT is the port where API is running. If API is running localy by default the HOST is 127.0.0.1 and PORT is 8000</p>
+<h2>Error Message</h2>
+<p>Should a request fail the server employs a standardized response: <br />
+HTTP MIME Response:</p>
+<pre><code>HTTP/1.1 Appropriate HTTP Code
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: Number Of Bytes In The Body
+
+{&quot;message&quot;: Error Message}
+</code></pre>
+<p><br />
+Example MIME Response:</p>
+<pre><code>HTTP/1.1 404 Not Found
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{&quot;message&quot;:&quot;Resource is not found&quot;}
+</code></pre>
+<h2>Create (add) an image</h2>
+<h3>Request</h3>
+<p>Description: the methods adds new image to the database and on success returns empty content with the 201 status code Created. Method is not idempotent and two request would result in two entities created. The entities can be further retrived via the get method. <br />
+<br />
+Endpoint url: <code>HOST:PORT/image</code> <br />
+Method: <code>POST</code></p>
+<h3>Successful Response</h3>
+<p>JSON Body:</p>
+<pre><code>{
+  &quot;author&quot;: Required. Author's name
+  &quot;image&quot;: Required. Image url
+  &quot;tags&quot;: Required. Tags
+  &quot;alt&quot;: Required. Image short description
+  &quot;description&quot;: Required. Image description
+}
+</code></pre>
+<p>JSON Body Example:</p>
+<pre><code>{
+  &quot;author&quot;: &quot;Grace Hopper&quot;,
+  &quot;image&quot;: &quot;https://upload.wikimedia.org/wikipedia/commons/3/37/Grace_Hopper_and_UNIVAC.jpg&quot;,
+  &quot;tags&quot;: &quot;programming,linking,navy&quot;,
+  &quot;alt&quot;: &quot;Image of Grace Hopper at the UNIVAC I console&quot;,
+  &quot;description&quot;: &quot;Grace was very curious as a child; this was a lifelong trait. At the age of seven, she decided      to determine how an alarm clock worked and dismantled seven alarm clocks before her mother realized what she was doing (she was then limited to one clock).&quot;
+}
+</code></pre>
+<p>HTTP MIME Response:</p>
+<pre><code>HTTP/1.1 201 Created
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 0
+</code></pre>
+<h3>Possible Errors</h3>
+<h4>Parameter Missing</h4>
+<p>Code: 400 <br />
+Description: the error occurs when one of the parameters (image, author, tags, alt, or description) is missing. The message signifies which paramenter/s is/are missing \</p>
+<p>HTTP MIME Response Example:</p>
+<pre><code>HTTP/1.1 400 Bad Request
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{&quot;message&quot;:&quot;image is missing&quot;}
+</code></pre>
+<h4>Server Error</h4>
+<p>Code: 500 <br />
+Description: when the server fails executing some of its functions. The message highlights the source of the error \</p>
+<p>HTTP MIME Response Example:</p>
+<pre><code>HTTP/1.1 500 Internal Server Error
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{&quot;message&quot;:&quot;database error: sql connection failed&quot;}
+</code></pre>
+<h2>Get images</h2>
+<h3>Request</h3>
+<p>Description: the method retrieves the images stored in the database. If id is specified, would return only the image data with the corresponding id. If not, would return the whole dataset stored in the database. On success returns a json object with image data along the 200 status code OK. The method is idempotent and safe. I.e running method twice results in the same result  (unless other requests were run in between running these two requests) and the method does not change the database. <br />
+<br />
+Endpoint url: <code>HOST:PORT/image</code> <br />
+Method: <code>GET</code> <br />
+Parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>Not Required</td>
+<td>id of the image for retrieval</td>
+</tr>
+</tbody>
+</table>
+<h3>Successful Response</h3>
+<p>HTTP MIME Response:</p>
+<pre><code>HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: number of bytes in the response
+
+[{ &quot;image&quot;: ..., &quot;author&quot;: ..., &quot;tags&quot;: ..., &quot;alt&quot;: ..., &quot;description&quot;: ...}, ...]
+</code></pre>
+<p>HTTP MIME Response Example:</p>
+<pre><code>HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: number of bytes in the response
+
+[{ &quot;image&quot;: &quot;https://upload.wikimedia.org/wikipedia/commons/3/37/Grace_Hopper_and_UNIVAC.jpg&quot;, author&quot;: &quot;Grace Hopper&quot;, &quot;tags&quot;: &quot;programming,linking,navy&quot;, &quot;alt&quot;: &quot;Image of Grace Hopper at the UNIVAC I console&quot;, &quot;description&quot;: &quot;Grace was very curious as a child; this was a lifelong trait. At the age of seven, she decided    to determine how an alarm clock worked and dismantled seven alarm clocks before her mother realized what she was doing (she was then limited to one clock).&quot;}]
+</code></pre>
+<h3>Possible Errors</h3>
+<h4>Id is not a number</h4>
+<p>Code: 400 <br />
+Description: the error occurs when the id is provided but is not a number \</p>
+<p>HTTP MIME Response Example:</p>
+<pre><code>HTTP/1.1 400 Bad Request
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{&quot;message&quot;:&quot;id is not a number&quot;}
+</code></pre>
+<h4>Image by id doesn't exist</h4>
+<p>Code: 404 <br />
+Description: the error occurs when the id is provided but no corresponding image exist \</p>
+<p>HTTP MIME Response Example:</p>
+<pre><code>HTTP/1.1 404 Not Found
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{&quot;message&quot;:&quot;image by id isn't found&quot;}
+</code></pre>
+<h4>Server Error</h4>
+<p>Code: 500 <br />
+Description: when the server fails executing some of its functions. The message highlights the source of the error \</p>
+<p>HTTP MIME Response Example:</p>
+<pre><code>HTTP/1.1 500 Internal Server Error
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{&quot;message&quot;:&quot;database error: sql connection failed&quot;}
+</code></pre>
+<h2>Update an Image</h2>
+<p>Description: the method updates the image entity via its id in the database. Id for a specific image can be retrieved via get method. All the image parameters need to be specified in the image requests. On success, the method returns an empty body along with 204 status code. <br />
+<br />
+Endpoint url: <code>HOST:PORT/image</code> <br />
+Method: <code>PUT</code> <br />
+JSON Body:</p>
+<pre><code>{
+  &quot;id&quot;: Required. Image id to be updated,
+  &quot;image&quot;: Required. Image url,
+  &quot;author&quot;: Required. Image author,
+  &quot;tags&quot;: Required. Image tags,
+  &quot;description&quot;: Required. Image description
+}
+</code></pre>
+<p>JSON Body Example:</p>
+<pre><code>  &quot;id&quot;: 1,
+  &quot;author&quot;: &quot;Grace Hopper&quot;,
+  &quot;image&quot;: &quot;https://upload.wikimedia.org/wikipedia/commons/3/37/Grace_Hopper_and_UNIVAC.jpg&quot;,
+  &quot;tags&quot;: &quot;programming,linking,navy&quot;,
+  &quot;alt&quot;: &quot;Image of Grace Hopper at the UNIVAC I console&quot;,
+  &quot;description&quot;: &quot;Grace was very curious as a child; this was a lifelong trait. At the age of seven, she decided      to determine how an alarm clock worked and dismantled seven alarm clocks before her mother realized what she      was doing (she was then limited to one clock).&quot;
+</code></pre>
+<p>HTTP MIME Response:</p>
+<pre><code>HTTP/1.1 204 No Content
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 0
+</code></pre>
+<h3>Possible Errors</h3>
+<h4>Id is not a number</h4>
+<p>Code: 400 <br />
+Description: the error occurs when the id is provided but is not a number \</p>
+<p>HTTP MIME Response Example:</p>
+<pre><code>HTTP/1.1 400 Bad Request
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{&quot;message&quot;:&quot;id is not a number&quot;}
+</code></pre>
+<h4>Server Error</h4>
+<p>Code: 500 <br />
+Description: when the server fails executing some of its functions. The message highlights the source of the error \</p>
+<p>HTTP MIME Response Example:</p>
+<pre><code>HTTP/1.1 500 Internal Server Error
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{&quot;message&quot;:&quot;database error: sql connection failed&quot;}
+</code></pre>
+<h2>Delete an Image</h2>
+<p>Description: the method deletes an image entity by its id from the database. Id for a specific image can be retrieved via the GET method. On succcess returns an empty body along with 204 status code. Method is idempotent, i.e if the request is sent twice the result is the same. <br />
+<br />
+Endpoint url: <code>HOST:PORT/image</code> <br />
+Method: <code>DELETE</code> <br />
+JSON Body:</p>
+<pre><code>{
+  &quot;id&quot;: Required. Image id to be deleted,
+}
+</code></pre>
+<p>JSON Body Example:</p>
+<pre><code>{
+  &quot;id&quot;: 1,
+}
+</code></pre>
+<p>HTTP MIME Response:</p>
+<pre><code>HTTP/1.1 204 No Content
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 0
+</code></pre>
+<h3>Possible Errors</h3>
+<h4>Id is not a number</h4>
+<p>Code: 400 <br />
+Description: the error occurs when the id is provided but is not a number \</p>
+<p>HTTP MIME Response Example:</p>
+<pre><code>HTTP/1.1 400 Bad Request
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{&quot;message&quot;:&quot;id is not a number&quot;}
+</code></pre>
+<h4>Server Error</h4>
+<p>Code: 500 <br />
+Description: when the server fails executing some of its functions. The message highlights the source of the error \</p>
+<p>HTTP MIME Response Example:</p>
+<pre><code>HTTP/1.1 500 Internal Server Error
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{&quot;message&quot;:&quot;database error: sql connection failed&quot;}
+</code></pre>

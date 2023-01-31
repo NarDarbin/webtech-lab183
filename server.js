@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 
-const PORT = 8000;
+const PORT = 7000;
 const app = express();
 const router = express.Router();
 
@@ -159,6 +159,24 @@ router.delete('/', async (req, res) => {
 
     res.status(201).send();
 });
+
+router.get('/reset', async (req, res) => {
+    res.set(HEADER);
+
+    const db = new sqlite3.Database(':memory', sqlite3.OPEN_READWRITE);
+    const statement = `DELETE FROM images`;
+
+    db.run(statement, (err) => {
+        if(err){
+            res.status(500).json({message: `Database error. ${err}`});
+            return;
+        }
+    });
+
+    db.close();
+
+    res.status(201).send();
+})
 
 setupDatabase();
 

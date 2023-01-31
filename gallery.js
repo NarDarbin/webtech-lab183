@@ -1,4 +1,4 @@
-const API = "https://wt.ops.labs.vu.nl/api23/daef2940";
+const API = "http://127.0.0.1:7000/image";
 
 const TABLE_DEFAULT_CONTENT = `
     <caption>Photo Album</caption>
@@ -16,26 +16,59 @@ const SELECT_DEFAULT_CONTENT = ``;
 let filters = {};
 
 function get(){
-    return fetch(API);
+    return fetch(API, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
 }
 
 function post(data){
     fetch(API, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
         method: 'post',
-        body: new URLSearchParams(data),
-    });
+        body: JSON.stringify(data),
+    })
+    .then(() => {
+        buildAlbum();
+    });;
 }
 
 function update(data){
-    fetch(`${API}/item/${data.id}`, {
+    fetch(API, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
         method: 'put',
-        body: new URLSearchParams(data),
-    });
+        body: JSON.stringify(data),
+    })
+    .then(() => {
+        buildAlbum();
+    });;
+}
+
+function deleteRequest(id){
+    fetch(API, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+        method: 'delete',
+        body: JSON.stringify({id}),
+    })
+    .then(() => {
+        buildAlbum();
+    });;
 }
 
 function reset(){
-    fetch(`${API}/reset`);
-    resetTable();
+    fetch(`${API}/reset`).then(() => {
+        buildAlbum();
+    });;
 }
 
 function filterAuthor(author){
@@ -77,7 +110,7 @@ function resetSelect(updateSelector){
     updateSelector.innerHTML = SELECT_DEFAULT_CONTENT;
 }
 
-function addRow(table, image, author, alt, tags, description){
+function addRow(table, id, image, author, alt, tags, description){
     table.innerHTML += `
         <tr>
             <td class="image">
@@ -86,6 +119,8 @@ function addRow(table, image, author, alt, tags, description){
                     <img src="${image}" alt="${alt}">
                     <figcaption>${alt}</figcaption>
                 </figure>
+
+                <button type="button" class="delete" name=${id}>Delete</button>
 
             </td>
             <td>
@@ -131,7 +166,7 @@ function buildAlbum(filters={}){
         resetSelect(updateSelector);
 
         for(const entity of data){
-            addRow(table, entity.image, entity.author, entity.alt, entity.tags, entity.description);
+            addRow(table, entity.id, entity.image, entity.author, entity.alt, entity.tags, entity.description);
             addOption(updateSelector, entity.id, entity.author);
         }
 
@@ -148,6 +183,10 @@ function buildAlbum(filters={}){
         if(table.classList.contains('filtered')){
             colorAuthor();
         }
+
+        document.querySelector('button.delete').addEventListener('click', function(e){
+            deleteRequest(e.target.name);
+        });
     });
 }
 
@@ -166,23 +205,16 @@ function main(){
         const form = document.querySelector('#add_form');
 
         post(getFormData(form));
-        buildAlbum();
     });
 
     document.querySelector('#update').addEventListener('click', function () {    
         const form = document.querySelector('#update_form');
 
         update(getFormData(form));
-        
-        // Without set timeout doesn't work
-        setTimeout(buildAlbum, 2000);
     });
 
     document.querySelector('#reset').addEventListener('click', function () {    
         reset();
-        
-        // Without set timeout doesn't work
-        setTimeout(buildAlbum, 2000);
     });
 
     document.querySelector('#search input').addEventListener('input', function(e){
