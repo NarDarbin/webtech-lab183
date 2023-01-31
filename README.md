@@ -34,7 +34,7 @@ Content-Length: 54
 Description: the methods adds new image to the database and on success returns empty content with the 201 status code Created. Method is not idempotent and two request would result in two entities created. The entities can be further retrived via the get method. \
 \
 Endpoint url: ```HOST:PORT/image``` \
-Method: ```POST``` \
+Method: ```POST```
 
 ### Successful Response
 JSON Body:
@@ -82,6 +82,21 @@ Content-Type: application/json
 Content-Length: 54
 
 {"message":"image is missing"}
+```
+
+#### Server Error
+
+Code: 500 \
+Description: when the server fails executing some of its functions. The message highlights the source of the error \
+
+HTTP MIME Response Example:
+```
+HTTP/1.1 500 Internal Server Error
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{"message":"database error: sql connection failed"}
 ```
 
 ## Get images
@@ -151,6 +166,21 @@ Content-Length: 54
 {"message":"image by id isn't found"}
 ```
 
+#### Server Error
+
+Code: 500 \
+Description: when the server fails executing some of its functions. The message highlights the source of the error \
+
+HTTP MIME Response Example:
+```
+HTTP/1.1 500 Internal Server Error
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{"message":"database error: sql connection failed"}
+```
+
 
 ## Update an Image
 
@@ -186,6 +216,41 @@ Content-Type: application/json
 Content-Length: 0
 ```
 
+### Possible Errors
+
+#### Id is not a number
+
+Code: 400 \
+Description: the error occurs when the id is provided but is not a number \
+
+HTTP MIME Response Example:
+
+```
+HTTP/1.1 400 Bad Request
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{"message":"id is not a number"}
+```
+
+#### Server Error
+
+Code: 500 \
+Description: when the server fails executing some of its functions. The message highlights the source of the error \
+
+HTTP MIME Response Example:
+```
+HTTP/1.1 500 Internal Server Error
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{"message":"database error: sql connection failed"}
+```
+
+
+
 ## Delete an Image
 
 Description: the method deletes an image entity by its id from the database. Id for a specific image can be retrieved via the GET method. On succcess returns an empty body along with 204 status code. Method is idempotent, i.e if the request is sent twice the result is the same. \
@@ -211,4 +276,36 @@ HTTP/1.1 204 No Content
 Accept-Ranges: bytes
 Content-Type: application/json
 Content-Length: 0
+```
+
+### Possible Errors
+
+#### Id is not a number
+
+Code: 400 \
+Description: the error occurs when the id is provided but is not a number \
+
+HTTP MIME Response Example:
+```
+HTTP/1.1 400 Bad Request
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{"message":"id is not a number"}
+```
+
+#### Server Error
+
+Code: 500 \
+Description: when the server fails executing some of its functions. The message highlights the source of the error \
+
+HTTP MIME Response Example:
+```
+HTTP/1.1 500 Internal Server Error
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{"message":"database error: sql connection failed"}
 ```
