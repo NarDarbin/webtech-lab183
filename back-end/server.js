@@ -29,10 +29,22 @@ function setupDatabase(){
 router.post('/', async (req, res) => {
     const { image, author, tags, description, alt } = req.body;
 
-    const db = new sqlite3.Database(':memory');
+    if(!image || !author || !tags || !description || !alt ){
+        const errMessage = `${!image ? 'Image Url is not present. ': ''} ${!author ? 'Author is not present. ': ''} 
+        ${!tags ? 'Tags not present. ': ''} ${!description ? 'Description is not present. ': ''} ${!alt ? 'Alt not present. ': ''}`;
+
+        res.status(403).json({message: errMessage});
+        return;
+    }
+
+    const db = new sqlite3.Database(':memory', sqlite3.OPEN_READWRITE);
     const statement = `INSERT INTO images (image, author, tags, description, alt) VALUES (?, ?, ?, ?, ?)`;
 
-    db.run(statement, [image, author, tags, description, alt]);
+    db.run(statement, [image, author, tags, description, alt], (err) => {
+        if(err){
+            res.status(500).json({message: `Database error. ${err}`});
+        }
+    });
 
     db.close();
 
@@ -40,12 +52,32 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-    const db = new sqlite3.Database(':memory');
-    const statement = `SELECT id, image, author, tags, description, alt FROM images`;
+    const {id} = req.query;
 
-    db.all(statement, (err, rows) => {
+    if(id && !Number(id) && !(Number(id) === 0)){
+        res.status(403).send({message: 'Id must be an integer'});
+        return;
+    }
+
+    const db = new sqlite3.Database(':memory', sqlite3.OPEN_READONLY);
+
+    let statement = `SELECT id, image, author, tags, description, alt FROM images`;
+    let args = [];
+
+    if(id){
+        statement += ` WHERE id=?`;
+        args.push(id);
+    }
+
+    db.all(statement, args, (err, rows) => {
         if (err) {
-            throw err;
+            res.status(500).json({message: `Database error. ${err}`});
+            return;
+        }
+
+        if(rows.length == 0 && id){
+            res.status(404).json({message: 'Resource is not found'});
+            return;
         }
 
         res.status(200).json(rows);
@@ -57,23 +89,56 @@ router.get('/', async (req, res) => {
 router.put('/', async (req, res) => {
     const { id, image, author, tags, description, alt } = req.body;
 
-    const db = new sqlite3.Database(':memory');
+    if(!id || !image || !author || !tags || !description || !alt ){
+        const errMessage = `${!id ? 'Id is not present. ': ''} ${!image ? 'Image Url is not present. ': ''} ${!author ? 'Author is not present. ': ''} 
+        ${!tags ? 'Tags not present. ': ''} ${!description ? 'Description is not present. ': ''} ${!alt ? 'Alt not present. ': ''}`;
+
+        res.status(403).json({message: errMessage});
+        return;
+    }
+
+    if(!Number(id) && !(Number(id) === 0)){
+        res.status(403).json({message: 'id must be an integer'});
+        return;
+    }
+
+    const db = new sqlite3.Database(':memory', sqlite3.OPEN_READWRITE);
     const statement = `UPDATE images SET image=?, author=?, tags=?, description=?, alt=? WHERE id=?`;
 
-    db.run(statement, [image, author, tags, description, alt, id]);
-
-    db.close();
+    db.run(statement, [image, author, tags, description, alt, id], (err) => {
+        if(err){
+            res.status(500).json({message: `Database error. ${err}`});
+            return;
+        }
+    });
 
     res.status(201).send();
+
+    db.close();
 });
 
 router.delete('/', async (req, res) => {
     const { id } = req.body;
 
-    const db = new sqlite3.Database(':memory');
+    if(!id){
+        res.status(403).json({message: 'id was not specified'});
+        return;
+    }
+
+    if(!Number(id) && !(Number(id) === 0)){
+        res.status(403).json({message: 'id must be an integer'});
+        return;
+    }
+
+    const db = new sqlite3.Database(':memory', sqlite3.OPEN_READWRITE);
     const statement = `DELETE FROM images WHERE id=?`;
 
-    db.run(statement, [id]);
+    db.run(statement, [id], (err) => {
+        if(err){
+            res.status(500).json({message: `Database error. ${err}`});
+            return;
+        }
+    });
 
     db.close();
 

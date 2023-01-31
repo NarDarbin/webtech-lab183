@@ -57,7 +57,7 @@ function filterAuthor(author){
 }
 
 function filterSearch(searchQuery){
-    filters.search = (data) => { return data.author.includes(searchQuery) || data.tags.includes(searchQuery) };
+    filters.search = (data) => { return data.author.toLowerCase().includes(searchQuery.toLowerCase()) || data.tags.toLowerCase().includes(searchQuery.toLowerCase()) };
     buildAlbum(filters)
 }
 
