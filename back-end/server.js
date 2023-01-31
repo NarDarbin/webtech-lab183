@@ -6,6 +6,13 @@ const PORT = 8000;
 const app = express();
 const router = express.Router();
 
+const HEADER = {
+    "Content-Type": "application/json; charset=utf-8",
+    "Access-Control-Allow-Origin": "*",
+    "Connection": "keep-alive",
+    "Keep-Alive": "timeout=5"
+}
+
 function setupDatabase(){
     const db = new sqlite3.Database(':memory');
     const statement = `
@@ -27,13 +34,15 @@ function setupDatabase(){
 
 
 router.post('/', async (req, res) => {
+    res.set(HEADER);
+
     const { image, author, tags, description, alt } = req.body;
 
     if(!image || !author || !tags || !description || !alt ){
         const errMessage = `${!image ? 'Image Url is not present. ': ''} ${!author ? 'Author is not present. ': ''} 
         ${!tags ? 'Tags not present. ': ''} ${!description ? 'Description is not present. ': ''} ${!alt ? 'Alt not present. ': ''}`;
 
-        res.status(403).json({message: errMessage});
+        res.status(400).json({message: errMessage});
         return;
     }
 
@@ -52,10 +61,12 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
+    res.set(HEADER);
+
     const {id} = req.query;
 
     if(id && !Number(id) && !(Number(id) === 0)){
-        res.status(403).send({message: 'Id must be an integer'});
+        res.status(400).send({message: 'Id must be an integer'});
         return;
     }
 
@@ -87,18 +98,20 @@ router.get('/', async (req, res) => {
 });
 
 router.put('/', async (req, res) => {
+    res.set(HEADER);
+
     const { id, image, author, tags, description, alt } = req.body;
 
     if(!id || !image || !author || !tags || !description || !alt ){
         const errMessage = `${!id ? 'Id is not present. ': ''} ${!image ? 'Image Url is not present. ': ''} ${!author ? 'Author is not present. ': ''} 
         ${!tags ? 'Tags not present. ': ''} ${!description ? 'Description is not present. ': ''} ${!alt ? 'Alt not present. ': ''}`;
 
-        res.status(403).json({message: errMessage});
+        res.status(400).json({message: errMessage});
         return;
     }
 
     if(!Number(id) && !(Number(id) === 0)){
-        res.status(403).json({message: 'id must be an integer'});
+        res.status(400).json({message: 'id must be an integer'});
         return;
     }
 
@@ -118,15 +131,17 @@ router.put('/', async (req, res) => {
 });
 
 router.delete('/', async (req, res) => {
+    res.set(HEADER);
+
     const { id } = req.body;
 
     if(!id){
-        res.status(403).json({message: 'id was not specified'});
+        res.status(400).json({message: 'id was not specified'});
         return;
     }
 
     if(!Number(id) && !(Number(id) === 0)){
-        res.status(403).json({message: 'id must be an integer'});
+        res.status(400).json({message: 'id must be an integer'});
         return;
     }
 
