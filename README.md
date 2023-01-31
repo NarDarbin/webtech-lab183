@@ -200,12 +200,14 @@ JSON Body:
 ```
 JSON Body Example:
 ```
+{
   "id": 1,
   "author": "Grace Hopper",
   "image": "https://upload.wikimedia.org/wikipedia/commons/3/37/Grace_Hopper_and_UNIVAC.jpg",
   "tags": "programming,linking,navy",
   "alt": "Image of Grace Hopper at the UNIVAC I console",
   "description": "Grace was very curious as a child; this was a lifelong trait. At the age of seven, she decided      to determine how an alarm clock worked and dismantled seven alarm clocks before her mother realized what she      was doing (she was then limited to one clock)."
+}
 ```
 
 HTTP MIME Response:
