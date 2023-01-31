@@ -28,7 +28,7 @@ JSON Body Example:
   "image": "https://upload.wikimedia.org/wikipedia/commons/3/37/Grace_Hopper_and_UNIVAC.jpg",
   "tags": "programming,linking,navy",
   "alt": "Image of Grace Hopper at the UNIVAC I console",
-  "description": "Grace was very curious as a child; this was a lifelong trait. At the age of seven, she decided      to determine how an alarm clock worked and dismantled seven alarm clocks before her mother realized what she      was doing (she was then limited to one clock)."
+  "description": "Grace was very curious as a child; this was a lifelong trait. At the age of seven, she decided      to determine how an alarm clock worked and dismantled seven alarm clocks before her mother realized what she was doing (she was then limited to one clock)."
 }
 ```
 
@@ -39,13 +39,18 @@ Accept-Ranges: bytes
 Content-Type: application/json
 Content-Length: 0
 ```
-## Get an Image
+## Get images
 
-Description: the method retrieves the images stored in the database. On success returns a json object with image data along the 200 status code OK. The method is idempotent and safe. I.e running method twice results in the same result  (unless other requests were run in between running these two requests) and the method does not change the database. \
+Description: the method retrieves the images stored in the database. If id is specified, would return only the image data with the corresponding id. If not, would return the whole dataset stored in the database. On success returns a json object with image data along the 200 status code OK. The method is idempotent and safe. I.e running method twice results in the same result  (unless other requests were run in between running these two requests) and the method does not change the database. \
 \
 Endpoint url: ```HOST:PORT/image``` \
 Method: ```GET``` \
-Parameters: none
+Parameters:
+
+Key | Required | Description 
+--- | --- | --- 
+id | Not Required | id of the image for retrieval
+
 
 HTTP MIME Response:
 ```
