@@ -86,6 +86,7 @@ Content-Length: 54
 
 ## Get images
 
+### Request
 Description: the method retrieves the images stored in the database. If id is specified, would return only the image data with the corresponding id. If not, would return the whole dataset stored in the database. On success returns a json object with image data along the 200 status code OK. The method is idempotent and safe. I.e running method twice results in the same result  (unless other requests were run in between running these two requests) and the method does not change the database. \
 \
 Endpoint url: ```HOST:PORT/image``` \
@@ -96,6 +97,7 @@ Key | Required | Description
 --- | --- | --- 
 id | Not Required | id of the image for retrieval
 
+### Successful Response
 
 HTTP MIME Response:
 ```
@@ -114,8 +116,41 @@ Accept-Ranges: bytes
 Content-Type: application/json
 Content-Length: number of bytes in the response
 
-[{ "image": "https://upload.wikimedia.org/wikipedia/commons/3/37/Grace_Hopper_and_UNIVAC.jpg", author": "Grace Hopper", "tags": "programming,linking,navy", "alt": "Image of Grace Hopper at the UNIVAC I console", "description": "Grace was very curious as a child; this was a lifelong trait. At the age of seven, she decided    to determine how an alarm clock worked and dismantled seven alarm clocks before her mother realized what she      was doing (she was then limited to one clock)."}]
+[{ "image": "https://upload.wikimedia.org/wikipedia/commons/3/37/Grace_Hopper_and_UNIVAC.jpg", author": "Grace Hopper", "tags": "programming,linking,navy", "alt": "Image of Grace Hopper at the UNIVAC I console", "description": "Grace was very curious as a child; this was a lifelong trait. At the age of seven, she decided    to determine how an alarm clock worked and dismantled seven alarm clocks before her mother realized what she was doing (she was then limited to one clock)."}]
 ```
+
+### Possible Errors
+
+#### Id is not a number
+
+Code: 400 \
+Description: the error occurs when the id is provided but is not a number \
+
+HTTP MIME Response Example:
+```
+HTTP/1.1 400 Bad Request
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{"message":"id is not a number"}
+```
+
+#### Image by id doesn't exist
+
+Code: 404 \
+Description: the error occurs when the id is provided but no corresponding image exist \
+
+HTTP MIME Response Example:
+```
+HTTP/1.1 404 Not Found
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{"message":"image by id isn't found"}
+```
+
 
 ## Update an Image
 
