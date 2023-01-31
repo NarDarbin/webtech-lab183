@@ -105,7 +105,7 @@ Content-Length: 0
 
 Description: the method deletes an image entity by its id from the database. Id for a specific image can be retrieved via the GET method. On succcess returns an empty body along with 204 status code. Method is idempotent, i.e if the request is sent twice the result is the same. \
 \
-Endpoint url: ```/image``` \
+Endpoint url: ```HOST:PORT/image``` \
 Method: ```DELETE``` \
 JSON Body:
 ```
