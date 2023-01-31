@@ -6,8 +6,8 @@ The requests defined in the documentation are destined for the HOST:PORT where H
 
 ## Create (add) an image
 
-Description: the methods adds new image to the database and on success returns empty content with the 201 status code Created. Method is not idempotent and two request would result in two entities created. The entities can be further retrived via the get method.
-Endpoint url: ```/image``` \
+Description: the methods adds new image to the database and on success returns empty content with the 201 status code Created. Method is not idempotent and two request would result in two entities created. The entities can be further retrived via the get method. \
+Endpoint url: ```HOST:PORT/image``` \
 Method: ```POST``` \
 JSON Body:
 ```
@@ -40,8 +40,8 @@ Content-Length: 0
 ```
 ## Get an Image
 
-Description: the method retrieves the images stored in the database. On success returns a json object with image data along the 200 status code OK.
-Endpoint url: ```/image``` \
+Description: the method retrieves the images stored in the database. On success returns a json object with image data along the 200 status code OK. The method is idempotent and safe. I.e running method twice results in the same result  (unless other requests were run in between running these two requests) and the method does not change the database. \
+Endpoint url: ```HOST:PORT/image``` \
 Method: ```GET``` \
 Parameters: none
 
@@ -67,7 +67,8 @@ Content-Length: number of bytes in the response
 
 ## Update an Image
 
-Endpoint url: ```/image``` \
+Description: the method updates the image entity via its id in the database. Id for a specific image can be retrieved via get method. All the image parameters need to be specified in the image requests. On success, the method returns an empty body along with 204 status code. \
+Endpoint url: ```HOST:PORT/image``` \
 Method: ```PUT``` \
 JSON Body:
 ```
@@ -79,6 +80,16 @@ JSON Body:
   "description": Required. Image description
 }
 ```
+JSON Body Example:
+```
+  "id": 1,
+  "author": "Grace Hopper",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/3/37/Grace_Hopper_and_UNIVAC.jpg",
+  "tags": "programming,linking,navy",
+  "alt": "Image of Grace Hopper at the UNIVAC I console",
+  "description": "Grace was very curious as a child; this was a lifelong trait. At the age of seven, she decided      to determine how an alarm clock worked and dismantled seven alarm clocks before her mother realized what she      was doing (she was then limited to one clock)."
+```
+
 HTTP MIME Response:
 ```
 HTTP/1.1 204 No Content
@@ -89,6 +100,7 @@ Content-Length: 0
 
 ## Delete an Image
 
+Description: the method deletes an image entity by its id from the database. Id for a specific image can be retrieved via the GET method. On succcess returns an empty body along with 204 status code. Method is idempotent, i.e if the request is sent twice the result is the same. \
 Endpoint url: ```/image``` \
 Method: ```DELETE``` \
 JSON Body:
@@ -97,6 +109,13 @@ JSON Body:
   "id": Required. Image id to be deleted,
 }
 ```
+JSON Body Example:
+```
+{
+  "id": 1,
+}
+```
+
 HTTP MIME Response:
 ```
 HTTP/1.1 204 No Content
