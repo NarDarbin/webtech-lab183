@@ -4,6 +4,29 @@
 
 The requests defined in the documentation are destined for the HOST:PORT where HOST is the server address and PORT is the port where API is running. If API is running localy by default the HOST is 127.0.0.1 and PORT is 8000
 
+## Error Message
+
+Should a request fail the server employs a standardized response: \
+HTTP MIME Response:
+```
+HTTP/1.1 Appropriate HTTP Code
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: Number Of Bytes In The Body
+
+{"message": Error Message}
+```
+\
+Example MIME Response:
+```
+HTTP/1.1 404 Not Found
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{"message":"Resource is not found"}
+```
+
 ## Create (add) an image
 
 Description: the methods adds new image to the database and on success returns empty content with the 201 status code Created. Method is not idempotent and two request would result in two entities created. The entities can be further retrived via the get method. \
