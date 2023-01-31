@@ -29,10 +29,14 @@ Content-Length: 54
 
 ## Create (add) an image
 
+### Request
+
 Description: the methods adds new image to the database and on success returns empty content with the 201 status code Created. Method is not idempotent and two request would result in two entities created. The entities can be further retrived via the get method. \
 \
 Endpoint url: ```HOST:PORT/image``` \
 Method: ```POST``` \
+
+### Successful Response
 JSON Body:
 ```
 {
@@ -62,6 +66,24 @@ Accept-Ranges: bytes
 Content-Type: application/json
 Content-Length: 0
 ```
+
+### Possible Errors
+
+#### Parameter Missing
+
+Code: 400 \
+Description: the error occurs when one of the parameters (image, author, tags, alt, or description) is missing. The message signifies which paramenter/s is/are missing \
+
+HTTP MIME Response Example:
+```
+HTTP/1.1 400 Bad Request
+Accept-Ranges: bytes
+Content-Type: application/json
+Content-Length: 54
+
+{"message":"image is missing"}
+```
+
 ## Get images
 
 Description: the method retrieves the images stored in the database. If id is specified, would return only the image data with the corresponding id. If not, would return the whole dataset stored in the database. On success returns a json object with image data along the 200 status code OK. The method is idempotent and safe. I.e running method twice results in the same result  (unless other requests were run in between running these two requests) and the method does not change the database. \
