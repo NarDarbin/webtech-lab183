@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
     }
 
     const db = new sqlite3.Database(':memory', sqlite3.OPEN_READWRITE);
-    const statement = `INSERT INTO sdf (image, author, tags, description, alt) VALUES (?, ?, ?, ?, ?)`;
+    const statement = `INSERT INTO images (image, author, tags, description, alt) VALUES (?, ?, ?, ?, ?)`;
 
     db.run(statement, [image, author, tags, description, alt], (err) => {
         if(err){
