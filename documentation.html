@@ -223,7 +223,7 @@ h3 {
             <main>
         <h1 id="documentation-for-the-back-end">Documentation For The Back-End</h1>
 <h2 id="introduction">General</h2>
-<p>The requests defined in the documentation are destined for the HOST:PORT where HOST is the server address and PORT is the port where API is running. If API is running localy by default the HOST is 127.0.0.1 and PORT is 8000 <br />
+<p>The requests defined in the documentation are destined for the HOST:PORT where HOST is the server address and PORT is the port where API is running. If API is running localy by default the HOST is http://127.0.0.1 and PORT is 8000 <br />
 <br />
 <strong>Important</strong>: all the resources serve their response in a JSON format with a <code>Content-Type: application/json; charset=utf-8</code> header.</p>
 <h2 id="error-message">Error Message</h2>
@@ -271,7 +271,7 @@ All the possible error codes and their meaning:</p>
 <h3 id="request">Request</h3>
 <p>Description: the methods adds new image to the database and on success returns empty content with the 201 status code Created. Method is not idempotent and two request would result in two entities created. The entities can be further retrived via the get method. <br />
 <br />
-Endpoint url: <code>HOST:PORT/image</code> <br />
+Endpoint URI: <code>HOST:PORT/image</code> <br />
 Method: <code>POST</code></p>
 <p>JSON Body Parameters:</p>
 <table>
@@ -380,7 +380,7 @@ Description: when the server fails executing some of its functions. The message 
 <h3 id="request-1">Request</h3>
 <p>Description: the method retrieves the images stored in the database. If id is specified, would return only the image data with the corresponding id. If not, would return the whole dataset stored in the database. On success returns a json object with image data along the 200 status code OK. The method is idempotent and safe. I.e running method twice results in the same result  (unless other requests were run in between running these two requests) and the method does not change the database.<br />
 <br />
-Endpoint url: <code>HOST:PORT/image</code> <br />
+Endpoint URI: <code>HOST:PORT/image</code> <br />
 Method: <code>GET</code> </p>
 <p>Query Prameters:</p>
 <table>
@@ -401,7 +401,7 @@ Method: <code>GET</code> </p>
 </tr>
 </tbody>
 </table>
-<p>Example Request Url:</p>
+<p>Example Request URI:</p>
 <p>Without id: <code>HOST:PORT/image</code><br />
 With id : <code>HOST:PORT/image?id=2</code></p>
 <h3 id="successful-response-1">Successful Response</h3>
@@ -540,7 +540,7 @@ Description: when the server fails executing some of its functions. The message 
 <p>Description: the method updates the image entity via its id in the database. Id for a specific image can be retrieved via get method. All the image parameters need to be specified in the image requests. On success, the method returns an empty body along with 204 status code. </p>
 <p>If image by id doesn't exist, new entity is created and 201 status code is returned.<br />
 <br />
-Endpoint url: <code>HOST:PORT/image</code> <br />
+Endpoint URI: <code>HOST:PORT/image</code> <br />
 Method: <code>PUT</code> </p>
 <table>
 <thead>
@@ -665,7 +665,7 @@ Description: when the server fails executing some of its functions. The message 
 <h3 id="request-3">Request</h3>
 <p>Description: the method deletes an image entity by its id from the database. Id for a specific image can be retrieved via the GET method. On succcess returns an empty body along with 204 status code. Method is idempotent, i.e if the request is sent twice the result is the same. If image by id doesn't exist, the database would not delete any entities.<br />
 <br />
-Endpoint url: <code>HOST:PORT/image</code> <br />
+Endpoint URI: <code>HOST:PORT/image</code> <br />
 Method: <code>DELETE</code> </p>
 <p>JSON Body Parameters:</p>
 <table>
