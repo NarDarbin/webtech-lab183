@@ -39,8 +39,7 @@ router.post('/', async (req, res) => {
     const { image, author, tags, description, alt } = req.body;
 
     if(!image || !author || !tags || !description || !alt ){
-        const errMessage = `${!image ? 'Image Url is not present. ': ''} ${!author ? 'Author is not present. ': ''} 
-        ${!tags ? 'Tags not present. ': ''} ${!description ? 'Description is not present. ': ''} ${!alt ? 'Alt not present. ': ''}`;
+        const errMessage = `${!image ? 'Image Url is not present.': ''}${!author ? 'Author is not present.': ''}${!tags ? 'Tags not present.': ''}${!description ? 'Description is not present.': ''}${!alt ? 'Alt not present.': ''}`;
 
         res.status(400).json({message: errMessage});
         return;
@@ -66,7 +65,7 @@ router.get('/', async (req, res) => {
     const {id} = req.query;
 
     if(id && !Number(id) && !(Number(id) === 0)){
-        res.status(400).send({message: 'Id must be an integer'});
+        res.status(400).send({message: 'id is not a number'});
         return;
     }
 
@@ -87,7 +86,7 @@ router.get('/', async (req, res) => {
         }
 
         if(rows.length == 0 && id){
-            res.status(404).json({message: 'Resource is not found'});
+            res.status(404).json({message: 'image by id is not found'});
             return;
         }
 
@@ -116,13 +115,31 @@ router.put('/', async (req, res) => {
     }
 
     const db = new sqlite3.Database(':memory', sqlite3.OPEN_READWRITE);
-    const statement = `UPDATE images SET image=?, author=?, tags=?, description=?, alt=? WHERE id=?`;
 
-    db.run(statement, [image, author, tags, description, alt, id], (err) => {
-        if(err){
+    let statement = `SELECT image FROM images WHERE id=?`;
+    db.all(statement, [id], (err, rows) => {
+        if (err) {
             res.status(500).json({message: `Database error. ${err}`});
             return;
         }
+
+        if(rows.length == 0){
+            statement = `INSERT INTO images (id, image, author, tags, description, alt) VALUES (?, ?, ?, ?, ?, ?)`;
+            db.run(statement, [id, image, author, tags, description, alt], (err) => {
+                if(err){
+                    res.status(201).send();
+                    return;
+                }
+            });
+        }
+
+        statement = `UPDATE images SET image=?, author=?, tags=?, description=?, alt=? WHERE id=?`;
+        db.run(statement, [image, author, tags, description, alt, id], (err) => {
+            if(err){
+                res.status(204).send();
+                return;
+            }
+        });
     });
 
     res.status(201).send();
