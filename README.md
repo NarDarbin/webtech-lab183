@@ -97,8 +97,8 @@ Content-Length: 0
 #### Parameter Missing
 
 Code: 400 \
-Description: the error occurs when one of the parameters (image, author, tags, alt, or description) is missing. The message specifies which paramenter/s is/are missing \
-
+Description: the error occurs when one of the parameters (image, author, tags, alt, or description) is missing. The message specifies which paramenter/s is/are missing.
+\
 HTTP MIME Response Example:
 ```
 HTTP/1.1 400 Bad Request
@@ -122,17 +122,22 @@ Description: when the server fails executing some of its functions. The message 
 HTTP MIME Response Example:
 ```
 HTTP/1.1 500 Internal Server Error
-Accept-Ranges: bytes
-Content-Type: application/json
-Content-Length: 54
 
-{"message":"database error: sql connection failed"}
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Keep-Alive: timeout=5
+Date: Wed, 01 Feb 2023 10:41:36 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 69
+
+{"message":"database error. Error: SQLITE_ERROR: no such table: sdf"}
 ```
 
 ## Get images
 
 ### Request
-Description: the method retrieves the images stored in the database. If id is specified, would return only the image data with the corresponding id. If not, would return the whole dataset stored in the database. On success returns a json object with image data along the 200 status code OK. The method is idempotent and safe. I.e running method twice results in the same result  (unless other requests were run in between running these two requests) and the method does not change the database. \
+Description: the method retrieves the images stored in the database. If id is specified, would return only the image data with the corresponding id. If not, would return the whole dataset stored in the database. On success returns a json object with image data along the 200 status code OK. The method is idempotent and safe. I.e running method twice results in the same result  (unless other requests were run in between running these two requests) and the method does not change the database.
 \
 Endpoint url: ```HOST:PORT/image``` \
 Method: ```GET``` \
@@ -149,6 +154,16 @@ Without id: ```HOST:PORT/image``` \
 With id : ```HOST:PORT/image?id=2```
 
 ### Successful Response
+
+The response is a JSON object with the following response fields:
+
+Field Name | Data Type | Description
+--- | --- | ---
+image | string | image url
+author | string | image author
+tags | string | image tags
+alt | string | image short description
+description | string | image description
 
 HTTP MIME Response:
 ```
@@ -185,7 +200,7 @@ Content-Length: 485
 #### Id is not a number
 
 Code: 400 \
-Description: the error occurs when the id is provided but is not a number. For example id provided is 's' \
+Description: the error occurs when the id is provided but is not a number. For example id provided is 's'.
 
 HTTP MIME Response Example:
 ```
@@ -225,22 +240,27 @@ Content-Length: 38
 #### Server Error
 
 Code: 500 \
-Description: when the server fails executing some of its functions. The message highlights the source of the error \
+Description: when the server fails executing some of its functions. The message highlights the error source \
 
 HTTP MIME Response Example:
 ```
 HTTP/1.1 500 Internal Server Error
-Accept-Ranges: bytes
-Content-Type: application/json
-Content-Length: 54
 
-{"message":"database error: sql connection failed"}
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Keep-Alive: timeout=5
+Date: Wed, 01 Feb 2023 10:41:36 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 69
+
+{"message":"database error. Error: SQLITE_ERROR: no such table: sdf"}
 ```
 
 
 ## Update an Image
 
-Description: the method updates the image entity via its id in the database. Id for a specific image can be retrieved via get method. All the image parameters need to be specified in the image requests. On success, the method returns an empty body along with 204 status code. If image by id doesn't exist, 204 would be returned but no entity would be updated. \
+Description: the method updates the image entity via its id in the database. Id for a specific image can be retrieved via get method. All the image parameters need to be specified in the image requests. On success, the method returns an empty body along with 204 status code. If image by id doesn't exist, 204 would be returned but no entity would be updated.
 \
 Endpoint url: ```HOST:PORT/image``` \
 Method: ```PUT``` \
@@ -315,23 +335,28 @@ Content-Length: 32
 #### Server Error
 
 Code: 500 \
-Description: when the server fails executing some of its functions. The message highlights the source of the error \
+Description: when the server fails executing some of its functions. The message highlights the error source \
 
 HTTP MIME Response Example:
 ```
 HTTP/1.1 500 Internal Server Error
-Accept-Ranges: bytes
-Content-Type: application/json
-Content-Length: 54
 
-{"message":"database error: sql connection failed"}
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Keep-Alive: timeout=5
+Date: Wed, 01 Feb 2023 10:41:36 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 69
+
+{"message":"database error. Error: SQLITE_ERROR: no such table: sdf"}
 ```
 
 
 
 ## Delete an Image
 
-Description: the method deletes an image entity by its id from the database. Id for a specific image can be retrieved via the GET method. On succcess returns an empty body along with 204 status code. Method is idempotent, i.e if the request is sent twice the result is the same. If image by id doesn't exist, the database would not delete any entities. \
+Description: the method deletes an image entity by its id from the database. Id for a specific image can be retrieved via the GET method. On succcess returns an empty body along with 204 status code. Method is idempotent, i.e if the request is sent twice the result is the same. If image by id doesn't exist, the database would not delete any entities.
 \
 Endpoint url: ```HOST:PORT/image``` \
 Method: ```DELETE``` \
@@ -345,7 +370,7 @@ id | yes | integer | image id
 JSON Body Overview:
 ```
 {
-  "id": Required. Image id to be deleted,
+  "id": ...,
 }
 ```
 JSON Body Example:
@@ -393,14 +418,19 @@ Content-Length: 32
 #### Server Error
 
 Code: 500 \
-Description: when the server fails executing some of its functions. The message highlights the source of the error \
+Description: when the server fails executing some of its functions. The message highlights the error source \
 
 HTTP MIME Response Example:
 ```
 HTTP/1.1 500 Internal Server Error
-Accept-Ranges: bytes
-Content-Type: application/json
-Content-Length: 54
 
-{"message":"database error: sql connection failed"}
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Keep-Alive: timeout=5
+Date: Wed, 01 Feb 2023 10:41:36 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 69
+
+{"message":"database error. Error: SQLITE_ERROR: no such table: sdf"}
 ```
