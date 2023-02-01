@@ -140,10 +140,10 @@ Method: ```GET``` \
 Query Prameters:
 
 Name | Required? | Data Type | Description 
---- | --- | --- 
+--- | --- | --- | ---
 id | no | integer | image id
 
-Example Request Url: \
+Example Request Url:
 
 Without id: ```HOST:PORT/image``` \
 With id : ```HOST:PORT/image?id=2```
@@ -240,18 +240,28 @@ Content-Length: 54
 
 ## Update an Image
 
-Description: the method updates the image entity via its id in the database. Id for a specific image can be retrieved via get method. All the image parameters need to be specified in the image requests. On success, the method returns an empty body along with 204 status code. \
+Description: the method updates the image entity via its id in the database. Id for a specific image can be retrieved via get method. All the image parameters need to be specified in the image requests. On success, the method returns an empty body along with 204 status code. If image by id doesn't exist, 204 would be returned but no entity would be updated. \
 \
 Endpoint url: ```HOST:PORT/image``` \
 Method: ```PUT``` \
-JSON Body:
+
+Name | Required? | Data Type | Description
+--- | --- | --- | ---
+id | yes | integer | image id
+author | yes | string | image author
+image | yes | string | image url
+tags | yes | string | image tags
+alt | yes | string | short image description
+description | yes | string | image description
+
+JSON Body Overview:
 ```
 {
-  "id": Required. Image id to be updated,
-  "image": Required. Image url,
-  "author": Required. Image author,
-  "tags": Required. Image tags,
-  "description": Required. Image description
+  "id": ...,
+  "image": ...,
+  "author": ...,
+  "tags": ...,
+  "description": ...
 }
 ```
 JSON Body Example:
@@ -269,8 +279,13 @@ JSON Body Example:
 HTTP MIME Response:
 ```
 HTTP/1.1 204 No Content
-Accept-Ranges: bytes
-Content-Type: application/json
+
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Keep-Alive: timeout=5
+Date: Wed, 01 Feb 2023 10:41:36 GMT
+Content-Type: application/json; charset=utf-8
 Content-Length: 0
 ```
 
@@ -285,9 +300,14 @@ HTTP MIME Response Example:
 
 ```
 HTTP/1.1 400 Bad Request
-Accept-Ranges: bytes
-Content-Type: application/json
-Content-Length: 54
+
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Keep-Alive: timeout=5
+Date: Wed, 01 Feb 2023 10:41:36 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 32
 
 {"message":"id is not a number"}
 ```
@@ -311,11 +331,18 @@ Content-Length: 54
 
 ## Delete an Image
 
-Description: the method deletes an image entity by its id from the database. Id for a specific image can be retrieved via the GET method. On succcess returns an empty body along with 204 status code. Method is idempotent, i.e if the request is sent twice the result is the same. \
+Description: the method deletes an image entity by its id from the database. Id for a specific image can be retrieved via the GET method. On succcess returns an empty body along with 204 status code. Method is idempotent, i.e if the request is sent twice the result is the same. If image by id doesn't exist, the database would not delete any entities. \
 \
 Endpoint url: ```HOST:PORT/image``` \
 Method: ```DELETE``` \
-JSON Body:
+
+JSON Body Parameters:
+
+Name | Required? | Data Type | Description
+--- | --- | --- | ---
+id | yes | integer | image id
+
+JSON Body Overview:
 ```
 {
   "id": Required. Image id to be deleted,
@@ -331,8 +358,13 @@ JSON Body Example:
 HTTP MIME Response:
 ```
 HTTP/1.1 204 No Content
-Accept-Ranges: bytes
-Content-Type: application/json
+
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Keep-Alive: timeout=5
+Date: Wed, 01 Feb 2023 10:41:36 GMT
+Content-Type: application/json; charset=utf-8
 Content-Length: 0
 ```
 
@@ -346,9 +378,14 @@ Description: the error occurs when the id is provided but is not a number \
 HTTP MIME Response Example:
 ```
 HTTP/1.1 400 Bad Request
-Accept-Ranges: bytes
-Content-Type: application/json
-Content-Length: 54
+
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Keep-Alive: timeout=5
+Date: Wed, 01 Feb 2023 10:41:36 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 32
 
 {"message":"id is not a number"}
 ```
