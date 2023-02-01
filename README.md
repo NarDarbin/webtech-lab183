@@ -260,7 +260,9 @@ Content-Length: 69
 
 ## Update an Image
 
-Description: the method updates the image entity via its id in the database. Id for a specific image can be retrieved via get method. All the image parameters need to be specified in the image requests. On success, the method returns an empty body along with 204 status code. If image by id doesn't exist, 204 would be returned but no entity would be updated.
+Description: the method updates the image entity via its id in the database. Id for a specific image can be retrieved via get method. All the image parameters need to be specified in the image requests. On success, the method returns an empty body along with 204 status code. 
+
+If image by id doesn't exist, new entity is created and 201 status code is returned.
 \
 Endpoint url: ```HOST:PORT/image``` \
 Method: ```PUT``` \
