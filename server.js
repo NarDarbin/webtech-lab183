@@ -46,17 +46,18 @@ router.post('/', async (req, res) => {
     }
 
     const db = new sqlite3.Database(':memory', sqlite3.OPEN_READWRITE);
-    const statement = `INSERT INTO images (image, author, tags, description, alt) VALUES (?, ?, ?, ?, ?)`;
+    const statement = `INSERT INTO sdf (image, author, tags, description, alt) VALUES (?, ?, ?, ?, ?)`;
 
     db.run(statement, [image, author, tags, description, alt], (err) => {
         if(err){
-            res.status(500).json({message: `Database error. ${err}`});
+            res.status(500).json({message: `database error. ${err}`});
+            return;
         }
+
+        res.status(201).send();
     });
 
     db.close();
-
-    res.status(201).send();
 });
 
 router.get('/', async (req, res) => {
@@ -115,8 +116,8 @@ router.put('/', async (req, res) => {
     }
 
     const db = new sqlite3.Database(':memory', sqlite3.OPEN_READWRITE);
-
     let statement = `SELECT image FROM images WHERE id=?`;
+
     db.all(statement, [id], (err, rows) => {
         if (err) {
             res.status(500).json({message: `Database error. ${err}`});
