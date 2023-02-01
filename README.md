@@ -55,7 +55,7 @@ tags | yes | string | image tags
 alt | yes | string | short image description
 description | yes | string | image description
 
-JSON Body Overview:
+JSON Body:
 ```
 {
   "author": ...
@@ -78,7 +78,10 @@ JSON Body Example:
 ```
 ### Successful Response
 
-HTTP MIME Response:
+Response Code: 201 Created \
+Response JSON Content: None 
+
+HTTP MIME:
 ```
 HTTP/1.1 201 Created
 
@@ -98,8 +101,8 @@ Content-Length: 0
 
 Code: 400 \
 Description: the error occurs when one of the parameters (image, author, tags, alt, or description) is missing. The message specifies which paramenter/s is/are missing.
-\
-HTTP MIME Response Example:
+
+HTTP MIME Example:
 ```
 HTTP/1.1 400 Bad Request
 
@@ -119,7 +122,7 @@ Content-Length: 36
 Code: 500 \
 Description: when the server fails executing some of its functions. The message highlights the source of the error \
 
-HTTP MIME Response Example:
+HTTP MIME Example:
 ```
 HTTP/1.1 500 Internal Server Error
 
@@ -155,6 +158,36 @@ With id : ```HOST:PORT/image?id=2```
 
 ### Successful Response
 
+Response Code: 200 OK
+
+Response JSON Content: 
+```
+[
+  { 
+    "id": ...,
+    "image": ..., 
+    "author": ..., 
+    "tags": ..., 
+    "alt": ..., 
+    "description": ...
+   }
+]
+```
+
+Response JSON Content Example: 
+```
+[
+  {
+    "id":25,
+    "image":"https://upload.wikimedia.org/wikipedia/commons/3/37/Grace_Hopper_and_UNIVAC.jpg",
+    "author":"Grace Hopper",
+    "tags":"programming,linking,navy",
+    "description":"Grace was very curious as a child; this was a lifelong trait. At the age of seven, she decided to determine how an alarm clock worked        and dismantled seven alarm clocks before her mother realized what she was doing (she was then limited to one clock).",
+    "alt":"Image of Grace Hopper at the UNIVAC I console"
+   }
+]
+```
+
 The response is a JSON object with the following response fields:
 
 Field Name | Data Type | Description
@@ -165,7 +198,7 @@ tags | string | image tags
 alt | string | image short description
 description | string | image description
 
-HTTP MIME Response:
+HTTP MIME:
 ```
 HTTP/1.1 200 OK
 
@@ -177,10 +210,10 @@ Date: Wed, 01 Feb 2023 10:41:36 GMT
 Content-Type: application/json; charset=utf-8
 Content-Length: Number Of Bytes In The Response
 
-[{ "image": ..., "author": ..., "tags": ..., "alt": ..., "description": ...}, ...]
+[{ "id": ..., "image": ..., "author": ..., "tags": ..., "alt": ..., "description": ...}, ...]
 ```
 
-HTTP MIME Response Example:
+HTTP MIME Example:
 ```
 HTTP/1.1 200 OK
 
@@ -202,7 +235,7 @@ Content-Length: 485
 Code: 400 \
 Description: the error occurs when the id is provided but is not a number. For example id provided is 's'.
 
-HTTP MIME Response Example:
+HTTP MIME Example:
 ```
 HTTP/1.1 400 Bad Request
 
@@ -222,7 +255,7 @@ Content-Length: 32
 Code: 404 \
 Description: the error occurs when the id is provided but no corresponding image exist \
 
-HTTP MIME Response Example:
+HTTP MIME Example:
 ```
 HTTP/1.1 404 Not Found
 
@@ -242,7 +275,7 @@ Content-Length: 38
 Code: 500 \
 Description: when the server fails executing some of its functions. The message highlights the error source \
 
-HTTP MIME Response Example:
+HTTP MIME Example:
 ```
 HTTP/1.1 500 Internal Server Error
 
@@ -260,6 +293,8 @@ Content-Length: 69
 
 ## Update an Image
 
+### Request
+
 Description: the method updates the image entity via its id in the database. Id for a specific image can be retrieved via get method. All the image parameters need to be specified in the image requests. On success, the method returns an empty body along with 204 status code. 
 
 If image by id doesn't exist, new entity is created and 201 status code is returned.
@@ -276,7 +311,7 @@ tags | yes | string | image tags
 alt | yes | string | short image description
 description | yes | string | image description
 
-JSON Body Overview:
+JSON Body:
 ```
 {
   "id": ...,
@@ -298,7 +333,25 @@ JSON Body Example:
 }
 ```
 
-HTTP MIME Response:
+### Successfull Response
+
+Response Code: 201 Created or 204 No Content \
+Response JSON Content: None 
+
+HTTP MIME:
+```
+HTTP/1.1 Appropriate Response Code
+
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Keep-Alive: timeout=5
+Date: Wed, 01 Feb 2023 10:41:36 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 0
+```
+
+HTTP MIME Example:
 ```
 HTTP/1.1 204 No Content
 
@@ -318,7 +371,7 @@ Content-Length: 0
 Code: 400 \
 Description: the error occurs when the id is provided but is not a number \
 
-HTTP MIME Response Example:
+HTTP MIME Example:
 
 ```
 HTTP/1.1 400 Bad Request
@@ -339,7 +392,7 @@ Content-Length: 32
 Code: 500 \
 Description: when the server fails executing some of its functions. The message highlights the error source \
 
-HTTP MIME Response Example:
+HTTP MIME Example:
 ```
 HTTP/1.1 500 Internal Server Error
 
@@ -358,6 +411,8 @@ Content-Length: 69
 
 ## Delete an Image
 
+### Request
+
 Description: the method deletes an image entity by its id from the database. Id for a specific image can be retrieved via the GET method. On succcess returns an empty body along with 204 status code. Method is idempotent, i.e if the request is sent twice the result is the same. If image by id doesn't exist, the database would not delete any entities.
 \
 Endpoint url: ```HOST:PORT/image``` \
@@ -369,7 +424,7 @@ Name | Required? | Data Type | Description
 --- | --- | --- | ---
 id | yes | integer | image id
 
-JSON Body Overview:
+JSON Body:
 ```
 {
   "id": ...,
@@ -382,7 +437,12 @@ JSON Body Example:
 }
 ```
 
-HTTP MIME Response:
+### Sucessfull Response
+
+Response Code: 204 No Content \
+Response JSON Content: None 
+
+HTTP MIME:
 ```
 HTTP/1.1 204 No Content
 
@@ -402,7 +462,7 @@ Content-Length: 0
 Code: 400 \
 Description: the error occurs when the id is provided but is not a number \
 
-HTTP MIME Response Example:
+HTTP MIME Example:
 ```
 HTTP/1.1 400 Bad Request
 
